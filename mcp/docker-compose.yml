@@ -11,9 +11,6 @@ services:
       - SEARCH_QUERY=AlexNet
       - GET_MODELCARD_PATH=/modelcard/{mc_id}
       - SEARCH_MODELCARDS_PATH=/modelcards/search
-      - THROUGHPUT_DURATION=10
-      - MAX_CONCURRENT=50
-      - MEASURE_THROUGHPUT=true
 
     network_mode: "host"
     volumes:

@@ -37,34 +37,18 @@ def read_durations(run_dir: Path, filename: str) -> pd.Series | None:
     return durations.astype(float)
 
 def read_db_latency(run_dir: Path, filename: str) -> tuple[float, float] | None:
-    """Read DB latency from timestamps CSV and return (mean, std) in ms."""
+    """Read DB latency from CSV with [start, end] timestamps and return (mean, std) in ms."""
     path = run_dir / filename
     if not path.exists():
         return None
     
-    # Read the first line to check if it's a header
-    with open(path, 'r') as f:
-        first_line = f.readline().strip()
+    df = pd.read_csv(path, header=None)
+    if df.empty or df.shape[1] < 2:
+        return None
     
-    # Check if first line contains column names (has 'timestamp' in it)
-    has_header = 'timestamp' in first_line.lower()
-    
-    if has_header:
-        df = pd.read_csv(path)
-        if df.empty:
-            return None
-        # Strip whitespace from column names
-        df.columns = df.columns.str.strip()
-        # Calculate latency: enrich_xai_analysis_timestamp - start_timestamp
-        latencies = (df['enrich_xai_analysis_timestamp'] - df['start_timestamp']) * 1000.0
-    else:
-        # No header, just start and end timestamps in two columns
-        df = pd.read_csv(path, header=None)
-        if df.empty or df.shape[1] < 2:
-            return None
-        latencies = (df.iloc[:, 1] - df.iloc[:, 0]) * 1000.0  # Convert to ms
-    
-    return float(latencies.mean()), float(latencies.std())
+    # Calculate latency: end - start, convert to milliseconds
+    latencies_ms = (df.iloc[:, 1] - df.iloc[:, 0]) * 1000.0
+    return float(latencies_ms.mean()), float(latencies_ms.std())
 
 def plot_stacked_latency_comparison(rest_mean_ms: float, rest_std_ms: float,
                                      mcp_mean_ms: float, mcp_std_ms: float,
@@ -86,14 +70,14 @@ def plot_stacked_latency_comparison(rest_mean_ms: float, rest_std_ms: float,
     ax.bar(x[0], db_mean_ms, width, color=db_color, label="Database", 
            yerr=db_std_ms, capsize=4, error_kw={'capthick': 1})
     ax.bar(x[0], mcp_mean_ms - db_mean_ms, width, bottom=db_mean_ms,
-           color=mcp_color, label="MCP overhead",
+           color=mcp_color, label="MCP",
            yerr=np.sqrt(mcp_std_ms**2 + db_std_ms**2), capsize=4, error_kw={'capthick': 1})
     
     # REST+MCP bar: DB + REST overhead + MCP overhead
     ax.bar(x[1], db_mean_ms, width, color=db_color,
            yerr=db_std_ms, capsize=4, error_kw={'capthick': 1})
     ax.bar(x[1], rest_mean_ms - db_mean_ms, width, bottom=db_mean_ms,
-           color=rest_color, label="REST overhead",
+           color=rest_color, label="REST",
            yerr=np.sqrt(rest_std_ms**2 + db_std_ms**2), capsize=4, error_kw={'capthick': 1})
     ax.bar(x[1], rest_mcp_mean_ms - rest_mean_ms, width, bottom=rest_mean_ms,
            color=mcp_color,
