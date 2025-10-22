@@ -1,3 +1,10 @@
+"""
+Benchmark script for the Patra REST MCP Server.
+
+This script benchmarks the MCP server endpoints and writes results to CSV files.
+Note: This requires the MCP server to be running.
+"""
+
 import asyncio
 import os
 import time
@@ -21,9 +28,9 @@ def init_csv_file(csv_file):
         csv.writer(f).writerow(CSV_HEADERS)
 
 async def main():
-    server_url = os.getenv("SERVER_URL", "http://localhost:8050/sse")
+    server_url = os.getenv("SERVER_URL", "http://localhost:8051/sse")
     results_dir = os.getenv("BENCHMARK_RESULTS_DIR", "/app/benchmark_results")
-    runs = int(os.getenv("BENCHMARK_RUNS", "10"))
+    runs = int(os.getenv("BENCHMARK_RUNS", "1000"))
     modelcard_id = os.getenv("MODELCARD_ID", "3f7b2c82-75fa-4335-a3b8-e1930893a974")
     search_query = os.getenv("SEARCH_QUERY", "AlexNet")
     
@@ -37,6 +44,10 @@ async def main():
     
     init_csv_file(get_modelcard_file)
     init_csv_file(search_modelcards_file)
+    
+    print(f"Connecting to MCP server at {server_url}")
+    print(f"Benchmark runs: {runs}")
+    print(f"Results will be saved to: {run_dir}")
     
     async with sse_client(server_url) as (read_stream, write_stream):
         async with ClientSession(read_stream, write_stream) as session:
@@ -52,6 +63,6 @@ async def main():
                 await session.call_tool("search_modelcards", arguments={"query": search_query})
                 write_latency_row(search_modelcards_file, time.perf_counter() - start)
 
-            
 if __name__ == "__main__":
     asyncio.run(main())
+
