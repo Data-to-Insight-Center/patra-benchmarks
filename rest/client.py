@@ -31,12 +31,10 @@ def main():
     run_dir.mkdir(parents=True, exist_ok=True)
     
     get_modelcard_file = run_dir / "get_modelcard.csv"
-    search_modelcards_file = run_dir / "search_modelcards.csv"
 
     init_csv_file(get_modelcard_file)
-
-    # Send BENCHMARK_RUNS+1 requests, but only write to CSV after the first request
-    for i in range(BENCHMARK_RUNS + 1):
+    
+    for i in range(BENCHMARK_RUNS):
         start_time = time.perf_counter()
         response = requests.get(f"{REST_API_BASE_URL}/modelcard/{MODELCARD_ID}")        
         end_time = time.perf_counter()

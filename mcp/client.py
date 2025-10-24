@@ -22,21 +22,18 @@ def init_csv_file(csv_file):
 
 async def main():
     server_url = os.getenv("SERVER_URL", "http://localhost:8050/sse")
-    results_dir = os.getenv("BENCHMARK_RESULTS_DIR", "/app/benchmark_results")
     runs = int(os.getenv("BENCHMARK_RUNS", "10"))
     modelcard_id = os.getenv("MODELCARD_ID", "megadetector-mc")
-    search_query = os.getenv("SEARCH_QUERY", "AlexNet")
-    
-    # Setup output directory
-    Path(results_dir).mkdir(parents=True, exist_ok=True)
-    run_dir = Path(results_dir) / f"run_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+    client_type = os.getenv("CLIENT_TYPE", "native")
+    benchmark_results_dir = os.getenv("BENCHMARK_RESULTS_DIR", "/app/benchmark_results")
+    # Setup output directory with date and client type
+    today = datetime.now().strftime('%Y_%m_%d')
+    run_dir = Path(benchmark_results_dir) / f"run_{today}" / client_type
     run_dir.mkdir(parents=True, exist_ok=True)
     
     get_modelcard_file = run_dir / "get_modelcard.csv"
-    search_modelcards_file = run_dir / "search_modelcards.csv"
-    
+
     init_csv_file(get_modelcard_file)
-    init_csv_file(search_modelcards_file)
     
     async with sse_client(server_url) as (read_stream, write_stream):
         async with ClientSession(read_stream, write_stream) as session:
@@ -56,19 +53,5 @@ async def main():
                 write_latency_row(get_modelcard_file, response_time_ms, response_size_kb)
                 print(f"get_modelcard {i+1}/{runs}: {response_time_ms:.2f}ms, {response_size_kb:.2f}KB")
                 
-            print(f"Running {runs} search_modelcards calls...")
-            for i in range(runs):
-                start = time.perf_counter()
-                result = await session.call_tool("search_modelcards", arguments={"q": search_query})
-                end = time.perf_counter()
-                
-                response_time_ms = (end - start) * 1000
-                response_str = str(result)
-                response_size_bytes = len(response_str.encode('utf-8'))
-                response_size_kb = response_size_bytes / 1024
-                
-                write_latency_row(search_modelcards_file, response_time_ms, response_size_kb)
-                print(f"search_modelcards {i+1}/{runs}: {response_time_ms:.2f}ms, {response_size_kb:.2f}KB")
-
 if __name__ == "__main__":
     asyncio.run(main())
