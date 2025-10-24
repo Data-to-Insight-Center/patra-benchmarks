@@ -166,8 +166,8 @@ def calculate_metrics(data_dict):
     
     # Layered MCP metrics
     layered_mcp_total = data_dict['layered_mcp_total']["total_time"].mean()
-    layered_mcp_db = data_dict['layered_mcp_db']["total_time"].mean()
-    layered_mcp_rest = data_dict['layered_mcp_rest']["total_time"].mean()
+    layered_mcp_db = data_dict['layered_mcp_db']["total_time"].mean() * 1000.0
+    layered_mcp_rest = data_dict['layered_mcp_rest']["total_time"].mean() * 1000.0
     layered_mcp_net = layered_mcp_total - layered_mcp_rest
     
     return {

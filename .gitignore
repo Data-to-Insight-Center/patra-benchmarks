@@ -1,1 +1,5 @@
 /analysis/venv
+mcp/benchmark_results
+rest/benchmark_results
+layered_mcp/benchmark_results
+layered_mcp/benchmark_results
