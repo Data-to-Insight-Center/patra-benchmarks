@@ -6,9 +6,9 @@ services:
       dockerfile: Dockerfile
     environment:
       - SERVER_URL=http://149.165.175.102:8050/sse
-      - BENCHMARK_RUNS=1000
-      - MODELCARD_ID=3f7b2c82-75fa-4335-a3b8-e1930893a974
-      - SEARCH_QUERY=AlexNet
+      - BENCHMARK_RUNS=10
+      - MODELCARD_ID=megadetector-mc
+      - SEARCH_QUERY=megadetector
       - GET_MODELCARD_PATH=/modelcard/{mc_id}
       - SEARCH_MODELCARDS_PATH=/modelcards/search
 
