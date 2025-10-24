@@ -8,7 +8,7 @@ def read_latency_data(file_path: Path) -> pd.DataFrame:
     return pd.read_csv(file_path)
 
 def plot_latency_comparison(rest_data: pd.DataFrame, mcp_data: pd.DataFrame, layered_mcp_data: pd.DataFrame) -> None:
-    plt.figure(figsize=(7, 5))
+    plt.figure(figsize=(5, 4))
     
     # Calculate average response sizes for legend
     rest_avg_size = rest_data['response_size_kb'].mean()
@@ -22,7 +22,7 @@ def plot_latency_comparison(rest_data: pd.DataFrame, mcp_data: pd.DataFrame, lay
     
     plt.xlabel('Run')
     plt.ylabel('Response Time (ms)')    
-    plt.title('Response Time Comparison')
+    # plt.title('Response Time Comparison')
     plt.legend()
     plt.grid(True, alpha=0.3)
     plt.tight_layout()
