@@ -29,9 +29,9 @@ def plot_latency_comparison(rest_data: pd.DataFrame, mcp_data: pd.DataFrame, lay
     plt.savefig('rtt_comparison.png')
 
 def main():
-    rest_data = read_latency_data(Path('/home/exouser/client/rest/benchmark_results/run_2025_10_24/get_modelcard.csv'))
-    mcp_data = read_latency_data(Path('/home/exouser/client/mcp/benchmark_results/run_2025_10_24/native/get_modelcard.csv'))
-    layered_mcp_data = read_latency_data(Path('/home/exouser/client/mcp/benchmark_results/run_2025_10_24/layered/get_modelcard.csv'))
+    rest_data = read_latency_data(Path('/home/exouser/client/rest/benchmark_results/run_2025_10_26/get_modelcard.csv'))
+    mcp_data = read_latency_data(Path('/home/exouser/client/mcp/benchmark_results/run_2025_10_26/native/get_modelcard.csv'))
+    layered_mcp_data = read_latency_data(Path('/home/exouser/client/mcp/benchmark_results/run_2025_10_26/layered/get_modelcard.csv'))
     plot_latency_comparison(rest_data, mcp_data, layered_mcp_data)
 
 if __name__ == '__main__':

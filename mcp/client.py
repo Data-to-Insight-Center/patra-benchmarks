@@ -27,7 +27,7 @@ async def run_benchmark(server_url, client_type, runs, modelcard_id, benchmark_r
     run_dir = Path(benchmark_results_dir) / f"run_{today}" / client_type
     run_dir.mkdir(parents=True, exist_ok=True)
     
-    get_modelcard_file = run_dir / "get_modelcard.csv"
+    get_modelcard_file = run_dir / "get_modelcard_rtt.csv"
     init_csv_file(get_modelcard_file)
     
     print(f"\n=== Testing {client_type.upper()} MCP Server ===")
@@ -70,8 +70,8 @@ async def main():
     
     print("\n=== Benchmark Complete ===")
     print("Results saved to:")
-    print(f"  - Native: {benchmark_results_dir}/run_{datetime.now().strftime('%Y_%m_%d')}/native/get_modelcard.csv")
-    print(f"  - Layered: {benchmark_results_dir}/run_{datetime.now().strftime('%Y_%m_%d')}/layered/get_modelcard.csv")
+    print(f"  - Native: {benchmark_results_dir}/run_{datetime.now().strftime('%Y_%m_%d')}/native/get_modelcard_rtt.csv")
+    print(f"  - Layered: {benchmark_results_dir}/run_{datetime.now().strftime('%Y_%m_%d')}/layered/get_modelcard_rtt.csv")
                 
 if __name__ == "__main__":
     asyncio.run(main())

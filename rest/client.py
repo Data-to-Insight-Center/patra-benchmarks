@@ -30,7 +30,7 @@ def main():
     run_dir = Path(BENCHMARK_RESULTS_DIR) / f"run_{today}"
     run_dir.mkdir(parents=True, exist_ok=True)
     
-    get_modelcard_file = run_dir / "get_modelcard.csv"
+    get_modelcard_file = run_dir / "get_modelcard_rtt.csv"
 
     init_csv_file(get_modelcard_file)
     

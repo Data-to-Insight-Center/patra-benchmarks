@@ -107,41 +107,31 @@ def latest_run_dir(root: Path) -> Path:
 
 def load_benchmark_data():
     """Load all benchmark data from CSV files."""
-    # Define directory paths
-    REST_DIR = Path("/home/exouser/client/rest/benchmark_results")
-    REST_DB_DIR = REST_DIR / "database"
-
-    MCP_DIR = Path("/home/exouser/client/mcp/benchmark_results")
-    MCP_DB_DIR = MCP_DIR / "database"
-    
-    LAYERED_MCP_DIR = Path("/home/exouser/client/layered_mcp/benchmark_results")
-    LAYERED_MCP_DB_DIR = LAYERED_MCP_DIR / "database"
-    LAYERED_MCP_REST_DIR = LAYERED_MCP_DIR / "rest"
+    # Define directory paths for the current run
+    REST_DIR = Path("/home/exouser/client/rest/benchmark_results/run_2025_10_26")
+    MCP_LAYERED_DIR = Path("/home/exouser/client/mcp/benchmark_results/run_2025_10_26/layered")
+    MCP_NATIVE_DIR = Path("/home/exouser/client/mcp/benchmark_results/run_2025_10_26/native")
     
     # Load get_modelcard data
     get_modelcard_data = {
-        'rest_db': pd.read_csv(latest_run_dir(REST_DB_DIR) / "get_modelcard.csv"),
-        'rest_total': pd.read_csv(latest_run_dir(REST_DIR) / "get_modelcard.csv"),
-        'mcp_db': pd.read_csv(latest_run_dir(MCP_DB_DIR) / "get_modelcard.csv"),
-        'mcp_total': pd.read_csv(latest_run_dir(MCP_DIR) / "get_modelcard.csv"),
-        'layered_mcp_db': pd.read_csv(latest_run_dir(LAYERED_MCP_DB_DIR) / "get_modelcard.csv", 
-                                   header=None, names=['total_time']),
-        'layered_mcp_rest': pd.read_csv(latest_run_dir(LAYERED_MCP_REST_DIR) / "get_modelcard.csv", 
-                                    header=None, names=['total_time']),
-        'layered_mcp_total': pd.read_csv(latest_run_dir(LAYERED_MCP_DIR) / "get_modelcard.csv")
+        'rest_db': pd.read_csv(REST_DIR / "get_modelcard_db.csv", header=None, names=['total_time']),
+        'rest_total': pd.read_csv(REST_DIR / "get_modelcard_rtt.csv")['response_time_ms'].to_frame(name='total_time'),
+        'mcp_db': pd.read_csv(MCP_NATIVE_DIR / "get_modelcard_db.csv", header=None, names=['total_time']),
+        'mcp_total': pd.read_csv(MCP_NATIVE_DIR / "get_modelcard_rtt.csv")['response_time_ms'].to_frame(name='total_time'),
+        'layered_mcp_db': pd.read_csv(MCP_LAYERED_DIR / "get_modelcard_db.csv", header=None, names=['total_time']),
+        'layered_mcp_rest': pd.read_csv(MCP_LAYERED_DIR / "get_modelcard_rest.csv", header=None, names=['total_time']),
+        'layered_mcp_total': pd.read_csv(MCP_LAYERED_DIR / "get_modelcard_rtt.csv")['response_time_ms'].to_frame(name='total_time')
     }
     
-    # Load search_modelcards data
+    # For now, we only have get_modelcard data, so we'll return empty search data
     search_modelcards_data = {
-        'rest_db': pd.read_csv(latest_run_dir(REST_DB_DIR) / "search_modelcard.csv"),
-        'rest_total': pd.read_csv(latest_run_dir(REST_DIR) / "search_modelcards.csv"),
-        'mcp_db': pd.read_csv(latest_run_dir(MCP_DB_DIR) / "search_modelcard.csv"),
-        'mcp_total': pd.read_csv(latest_run_dir(MCP_DIR) / "search_modelcards.csv"),
-        'layered_mcp_db': pd.read_csv(latest_run_dir(LAYERED_MCP_DB_DIR) / "search_modelcard.csv", 
-                                  header=None, names=['total_time']),
-        'layered_mcp_rest': pd.read_csv(latest_run_dir(LAYERED_MCP_REST_DIR) / "search_modelcard.csv", 
-                                    header=None, names=['total_time']),
-        'layered_mcp_total': pd.read_csv(latest_run_dir(LAYERED_MCP_DIR) / "search_modelcards.csv")
+        'rest_db': pd.DataFrame({'total_time': []}),
+        'rest_total': pd.DataFrame({'total_time': []}),
+        'mcp_db': pd.DataFrame({'total_time': []}),
+        'mcp_total': pd.DataFrame({'total_time': []}),
+        'layered_mcp_db': pd.DataFrame({'total_time': []}),
+        'layered_mcp_rest': pd.DataFrame({'total_time': []}),
+        'layered_mcp_total': pd.DataFrame({'total_time': []})
     }
     
     return get_modelcard_data, search_modelcards_data
@@ -164,39 +154,38 @@ def calculate_metrics(data_dict):
     mcp_db = data_dict['mcp_db']["total_time"].mean()
     mcp_net = mcp_total - mcp_db
     
-    # Layered MCP metrics
+    # Layered MCP metrics - use REST network overhead and MCP network overhead
     layered_mcp_total = data_dict['layered_mcp_total']["total_time"].mean()
-    layered_mcp_db = data_dict['layered_mcp_db']["total_time"].mean() * 1000.0
-    layered_mcp_rest = data_dict['layered_mcp_rest']["total_time"].mean() * 1000.0
-    layered_mcp_net = layered_mcp_total - layered_mcp_rest
+    layered_mcp_db = data_dict['layered_mcp_db']["total_time"].mean()
+    # Use REST network overhead and MCP network overhead for layered MCP
+    layered_mcp_rest_net = rest_net  # REST network overhead
+    layered_mcp_mcp_net = mcp_net    # MCP network overhead
     
     return {
         'rest': {'total': rest_total, 'db': rest_db, 'net': rest_net},
         'native_mcp': {'total': mcp_total, 'db': mcp_db, 'net': mcp_net},
-        'layered_mcp': {'total': layered_mcp_total, 'db': layered_mcp_db, 'rest': layered_mcp_rest, 'net': layered_mcp_net}
+        'layered_mcp': {'total': layered_mcp_total, 'db': layered_mcp_db, 'rest': layered_mcp_rest_net, 'net': layered_mcp_mcp_net}
     }
 
 def calculate_standard_deviations(data_dict):
     """Calculate standard deviations for error bars."""
     # REST standard deviations
     rest_db_std = data_dict['rest_db']["total_time"].std()
-    rest_net_std = (data_dict['rest_total']["total_time"] - data_dict['rest_db']["total_time"]).std()
+    rest_std = data_dict['rest_total']["total_time"].std()
     
     # Native MCP standard deviations
     mcp_db_std = data_dict['mcp_db']["total_time"].std()
-    mcp_net_std = (data_dict['mcp_total']["total_time"] - data_dict['mcp_db']["total_time"]).std()
+    mcp_std = data_dict['mcp_total']["total_time"].std()
     
-    # Layered MCP standard deviations
+    # Layered MCP standard deviations - use REST and MCP network stds
     layered_mcp_db_std = data_dict['layered_mcp_db']["total_time"].std()
     layered_mcp_rest_std = data_dict['layered_mcp_rest']["total_time"].std()
-    layered_mcp_net_std = (data_dict['layered_mcp_total']["total_time"] - 
-                        data_dict['layered_mcp_db']["total_time"] - 
-                        data_dict['layered_mcp_rest']["total_time"]).std()
+    layered_mcp_std = data_dict['layered_mcp_total']["total_time"].std()
     
     return {
-        'rest': {'db_std': rest_db_std, 'net_std': rest_net_std},
-        'native_mcp': {'db_std': mcp_db_std, 'net_std': mcp_net_std},
-        'layered_mcp': {'db_std': layered_mcp_db_std, 'rest_std': layered_mcp_rest_std, 'net_std': layered_mcp_net_std}
+        'rest': {'db_std': rest_db_std, 'rest_std': rest_std},
+        'native_mcp': {'db_std': mcp_db_std, 'mcp_std': mcp_std},
+        'layered_mcp': {'db_std': layered_mcp_db_std, 'rest_std': layered_mcp_rest_std, 'mcp_std': layered_mcp_std}
     }
 
 # =============================================================================
@@ -208,39 +197,64 @@ def create_stacked_bar_plot(metrics, std_devs, title, output_path):
     plt.figure(figsize=PLOT_CONFIG['figsize'])
     bar_width = PLOT_CONFIG['bar_width']
     x = [0, 1, 2]
+    alpha_value = 0.4  # Lower alpha for transparency
     
-    # Extract metrics
+    # Extract metrics and standard deviations
     rest = metrics['rest']
     native_mcp = metrics['native_mcp']
     layered_mcp = metrics['layered_mcp']
     
-    # REST bar: Database + REST Overhead
-    plt.bar(x[0], rest['db'], width=bar_width, label='Database Overhead',
-            color=COLORS['db_transparent'], edgecolor=COLORS['black'],
-            linewidth=1.2, hatch=PLOT_CONFIG['hatch_patterns']['database'], alpha=0.8)
-    plt.bar(x[0], rest['net'], width=bar_width, bottom=rest['db'], label='REST Overhead',
-            color=COLORS['rest_transparent'], edgecolor=COLORS['black'],
-            linewidth=1.2, hatch=PLOT_CONFIG['hatch_patterns']['rest'], alpha=0.8)
+    rest_std = std_devs['rest']
+    native_mcp_std = std_devs['native_mcp']
+    layered_mcp_std = std_devs['layered_mcp']
     
-    # Native MCP bar: Database + MCP Overhead
+    # REST bar: Database + REST Network Overhead
+    plt.bar(x[0], rest['db'], width=bar_width, label='Database',
+            color=COLORS['db_transparent'], edgecolor=COLORS['black'],
+            linewidth=1.2, hatch=PLOT_CONFIG['hatch_patterns']['database'], alpha=alpha_value)
+    plt.bar(x[0], rest['net'], width=bar_width, bottom=rest['db'], label='REST',
+            color=COLORS['rest_transparent'], edgecolor=COLORS['black'],
+            linewidth=1.2, hatch=PLOT_CONFIG['hatch_patterns']['rest'], alpha=alpha_value)
+    
+    # Native MCP bar: Database + MCP Network Overhead
     plt.bar(x[1], native_mcp['db'], width=bar_width,
             color=COLORS['db_transparent'], edgecolor=COLORS['black'],
-            linewidth=1.2, hatch=PLOT_CONFIG['hatch_patterns']['database'], alpha=0.8)
-    plt.bar(x[1], native_mcp['net'], width=bar_width, bottom=native_mcp['db'], label='MCP Overhead',
+            linewidth=1.2, hatch=PLOT_CONFIG['hatch_patterns']['database'], alpha=alpha_value)
+    plt.bar(x[1], native_mcp['net'], width=bar_width, bottom=native_mcp['db'], label='MCP',
             color=COLORS['mcp_transparent'], edgecolor=COLORS['black'],
-            linewidth=1.2, hatch=PLOT_CONFIG['hatch_patterns']['mcp'], alpha=0.8)
+            linewidth=1.2, hatch=PLOT_CONFIG['hatch_patterns']['mcp'], alpha=alpha_value)
     
-    # Layered MCP bar: Database + REST + MCP
+    # Layered MCP bar: Database + REST Network + MCP Network
     plt.bar(x[2], layered_mcp['db'], width=bar_width,
             color=COLORS['db_transparent'], edgecolor=COLORS['black'],
-            linewidth=1.2, hatch=PLOT_CONFIG['hatch_patterns']['database'], alpha=0.8)
+            linewidth=1.2, hatch=PLOT_CONFIG['hatch_patterns']['database'], alpha=alpha_value)
     plt.bar(x[2], layered_mcp['rest'], width=bar_width, bottom=layered_mcp['db'],
             color=COLORS['rest_transparent'], edgecolor=COLORS['black'],
-            linewidth=1.2, hatch=PLOT_CONFIG['hatch_patterns']['rest'], alpha=0.8)
+            linewidth=1.2, hatch=PLOT_CONFIG['hatch_patterns']['rest'], alpha=alpha_value)
     plt.bar(x[2], layered_mcp['net'], width=bar_width, 
             bottom=layered_mcp['db'] + layered_mcp['rest'],
             color=COLORS['mcp_transparent'], edgecolor=COLORS['black'],
-            linewidth=1.2, hatch=PLOT_CONFIG['hatch_patterns']['mcp'], alpha=0.8)
+            linewidth=1.2, hatch=PLOT_CONFIG['hatch_patterns']['mcp'], alpha=alpha_value)
+    
+    # # REST error bars
+    # plt.errorbar(x[0], rest['total'], yerr=rest_std['rest_std'], 
+    #             fmt='none', color='black', capsize=5, capthick=1.5, elinewidth=1.5)
+    # plt.errorbar(x[0], rest['db'], yerr=rest_std['db_std'], 
+    #             fmt='none', color='black', capsize=5, capthick=1.5, elinewidth=1.5)
+    
+    # # Native MCP error bars
+    # plt.errorbar(x[1], native_mcp['total'], yerr=native_mcp_std['mcp_std'], 
+    #             fmt='none', color='black', capsize=5, capthick=1.5, elinewidth=1.5)
+    # plt.errorbar(x[1], native_mcp['db'], yerr=native_mcp_std['db_std'], 
+    #             fmt='none', color='black', capsize=5, capthick=1.5, elinewidth=1.5)
+    
+    # # Layered MCP error bars
+    # plt.errorbar(x[2], layered_mcp['total'], yerr=layered_mcp_std['mcp_std'], 
+    #             fmt='none', color='black', capsize=5, capthick=1.5, elinewidth=1.5)
+    # plt.errorbar(x[2], layered_mcp['rest'], yerr=layered_mcp_std['rest_std'], 
+    #             fmt='none', color='black', capsize=5, capthick=1.5, elinewidth=1.5)
+    # plt.errorbar(x[2], layered_mcp['db'], yerr=layered_mcp_std['db_std'], 
+    #             fmt='none', color='black', capsize=5, capthick=1.5, elinewidth=1.5)
     
     # Configure plot appearance
     plt.title(title, fontsize=14, fontweight='bold')
@@ -276,40 +290,44 @@ def main():
     """Main execution function."""
     # Load benchmark data
     get_modelcard_data, search_modelcards_data = load_benchmark_data()
-    
-    # Convert to milliseconds
-    convert_to_milliseconds(get_modelcard_data)
-    convert_to_milliseconds(search_modelcards_data)
-    
+        
     # Calculate metrics for get_modelcard
     get_modelcard_metrics = calculate_metrics(get_modelcard_data)
     get_modelcard_std = calculate_standard_deviations(get_modelcard_data)
+    
+    # Create output directory if it doesn't exist
+    output_dir = Path("/home/exouser/client/analysis/outputs")
+    output_dir.mkdir(exist_ok=True)
     
     # Create get_modelcard plot
     create_stacked_bar_plot(
         get_modelcard_metrics, 
         get_modelcard_std,
         "Model Card Retrieval",
-        "/home/exouser/client/analysis/outputs/get_modelcard_breakdown.png"
+        str(output_dir / "get_modelcard_breakdown.png")
     )
     
     # Print get_modelcard summary
     print_performance_summary(get_modelcard_metrics, "GET_MODELCARD")
     
-    # Calculate metrics for search_modelcards
-    search_modelcards_metrics = calculate_metrics(search_modelcards_data)
-    search_modelcards_std = calculate_standard_deviations(search_modelcards_data)
-    
-    # Create search_modelcards plot
-    create_stacked_bar_plot(
-        search_modelcards_metrics,
-        search_modelcards_std,
-        "Model Cards Search", 
-        "/home/exouser/client/analysis/outputs/search_modelcards_breakdown.png"
-    )
-    
-    # Print search_modelcards summary
-    print_performance_summary(search_modelcards_metrics, "SEARCH_MODELCARDS")
+    # Only process search_modelcards if we have data
+    if not search_modelcards_data['rest_total'].empty:
+        # Calculate metrics for search_modelcards
+        search_modelcards_metrics = calculate_metrics(search_modelcards_data)
+        search_modelcards_std = calculate_standard_deviations(search_modelcards_data)
+        
+        # Create search_modelcards plot
+        create_stacked_bar_plot(
+            search_modelcards_metrics,
+            search_modelcards_std,
+            "Model Cards Search", 
+            str(output_dir / "search_modelcards_breakdown.png")
+        )
+        
+        # Print search_modelcards summary
+        print_performance_summary(search_modelcards_metrics, "SEARCH_MODELCARDS")
+    else:
+        print("No search_modelcards data available - skipping search visualization")
 
 if __name__ == "__main__":
     main()

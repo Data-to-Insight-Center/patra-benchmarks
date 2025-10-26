@@ -3,7 +3,7 @@
 URL="http://149.165.175.102:5002/modelcard/megadetector-mc"
 TIMESTAMP=$(date '+%Y%m%d_%H%M%S')
 OUTPUT_DIR="/home/exouser/client/rest/benchmark_results/run_${TIMESTAMP}"
-OUTPUT_FILE="${OUTPUT_DIR}/get_modelcard.csv"
+OUTPUT_FILE="${OUTPUT_DIR}/get_modelcard_rtt.csv"
 
 # Create directory
 mkdir -p "$OUTPUT_DIR"
