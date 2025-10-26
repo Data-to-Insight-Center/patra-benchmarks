@@ -51,9 +51,9 @@ async def run_benchmark(server_url, client_type, runs, modelcard_id, benchmark_r
                 # Only write to CSV after the first request (skip index 0)
                 if i > 0:
                     write_latency_row(get_modelcard_file, response_time_ms, response_size_kb)
-                    print(f"get_modelcard {i}/{runs}: {response_time_ms:.2f}ms, {response_size_kb:.2f}KB")
+                    print(f"get_modelcard {i}/{runs}: {response_time_ms:.2f}ms, {response_size_kb}KB")
                 else:
-                    print(f"Warm-up call: {response_time_ms:.2f}ms, {response_size_kb:.2f}KB")
+                    print(f"Warm-up call: {response_time_ms:.2f}ms, {response_size_kb}KB")
 
 async def main():
     runs = int(os.getenv("BENCHMARK_RUNS", "10"))
