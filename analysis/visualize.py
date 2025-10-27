@@ -42,8 +42,8 @@ plt.rcParams.update({
     'axes.grid': True,
     'axes.axisbelow': True,
     'axes.facecolor': 'white',
-    'axes.spines.top': False,
-    'axes.spines.right': False,
+    # 'axes.spines.top': False,
+    # 'axes.spines.right': False,
     
     # Tick settings
     'xtick.color': '#333333',
@@ -53,7 +53,7 @@ plt.rcParams.update({
     
     # Legend settings - professional appearance
     'legend.frameon': True,
-    'legend.framealpha': 0.95,
+    # 'legend.framealpha': 0.95,
     'legend.edgecolor': '#cccccc',
     'legend.fancybox': False,
     'legend.shadow': False,
@@ -71,24 +71,29 @@ COLORS = {
     'black': '#000000',      # Primary text/pattern lines
     'white': '#ffffff',      # Background
     # Transparent colors for layered visualization
-    'db_transparent': '#f0f0f0',      # Very light gray for database
+    'db_transparent': '#e8f2f7',      # light blue
     'rest_transparent': '#ffe6cc',    # Very light orange for REST
     'mcp_transparent': '#e6ffe6',     # Very light green for MCP
 }
 
 # Plot configuration
 PLOT_CONFIG = {
-    'figsize': (5, 4),
+    'figsize': (4, 3.5),
     'bar_width': 0.75,
     'fontsize': {
-        'xticks': 12,
-        'ylabel': 12,
-        'legend': 10
+        'xticks': 10,
+        'ylabel': 10,
+        'legend': 9
+    },
+    'fontweight': {
+        'xticks': 'bold',
+        'ylabel': 'bold',
+        'legend': 'bold'
     },
     'hatch_patterns': {
-        'database': 'o',
-        'rest': '+',
-        'mcp': '*'
+        'database': '..',
+        'rest': 'xx',
+        'mcp': '//'
     }
 }
 
@@ -107,12 +112,13 @@ def latest_run_dir(root: Path) -> Path:
 
 def load_benchmark_data():
     """Load all benchmark data from CSV files."""
-    # Define directory paths for the current run
-    REST_DIR = Path("/home/exouser/client/rest/benchmark_results/run_2025_10_26")
-    MCP_LAYERED_DIR = Path("/home/exouser/client/mcp/benchmark_results/run_2025_10_26/layered")
-    MCP_NATIVE_DIR = Path("/home/exouser/client/mcp/benchmark_results/run_2025_10_26/native")
+    # Define directory paths for today's run
+    today = "2025_10_26"
+    REST_DIR = Path(f"/home/exouser/client/rest/benchmark_results/run_{today}")
+    MCP_LAYERED_DIR = Path(f"/home/exouser/client/mcp/benchmark_results/run_{today}/layered")
+    MCP_NATIVE_DIR = Path(f"/home/exouser/client/mcp/benchmark_results/run_{today}/native")
     
-    # Load get_modelcard data
+    # Load get_modelcard data for today's run
     get_modelcard_data = {
         'rest_db': pd.read_csv(REST_DIR / "get_modelcard_db.csv", header=None, names=['total_time']),
         'rest_total': pd.read_csv(REST_DIR / "get_modelcard_rtt.csv")['response_time_ms'].to_frame(name='total_time'),
@@ -197,7 +203,7 @@ def create_stacked_bar_plot(metrics, std_devs, title, output_path):
     plt.figure(figsize=PLOT_CONFIG['figsize'])
     bar_width = PLOT_CONFIG['bar_width']
     x = [0, 1, 2]
-    alpha_value = 0.4  # Lower alpha for transparency
+    alpha_value = 1  # Lower alpha for transparency
     
     # Extract metrics and standard deviations
     rest = metrics['rest']
@@ -257,14 +263,14 @@ def create_stacked_bar_plot(metrics, std_devs, title, output_path):
     #             fmt='none', color='black', capsize=5, capthick=1.5, elinewidth=1.5)
     
     # Configure plot appearance
-    plt.title(title, fontsize=14, fontweight='bold')
-    plt.xticks(x, ["REST", "Native MCP", "Layered MCP"], 
-               fontsize=PLOT_CONFIG['fontsize']['xticks'])
-    plt.ylabel("Latency (ms)", fontsize=PLOT_CONFIG['fontsize']['ylabel'])
+    # plt.title(title, fontsize=14, fontweight='bold')
+    plt.xticks(x, ["REST", "Native\nMCP", "Layered\nMCP"], 
+               fontsize=PLOT_CONFIG['fontsize']['xticks'], fontweight=PLOT_CONFIG['fontweight']['xticks'])
+    plt.ylabel("Latency (ms)", fontsize=PLOT_CONFIG['fontsize']['ylabel'], fontweight=PLOT_CONFIG['fontweight']['ylabel'])
     plt.legend(fontsize=PLOT_CONFIG['fontsize']['legend'], loc='upper left', 
                frameon=True, framealpha=0.98, 
-             edgecolor=COLORS['lightgray'], facecolor='white')
-    plt.grid(True, alpha=0.3)
+               edgecolor=COLORS['lightgray'], facecolor='white')
+    plt.grid(True, alpha=0.5)
     plt.tight_layout()
     plt.savefig(output_path)
     plt.close()
