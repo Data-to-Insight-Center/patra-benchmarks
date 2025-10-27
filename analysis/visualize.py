@@ -113,7 +113,7 @@ def latest_run_dir(root: Path) -> Path:
 def load_benchmark_data():
     """Load all benchmark data from CSV files."""
     # Define directory paths for today's run
-    today = "2025_10_26"
+    today = "2025_10_27"
     REST_DIR = Path(f"/home/exouser/client/rest/benchmark_results/run_{today}")
     MCP_LAYERED_DIR = Path(f"/home/exouser/client/mcp/benchmark_results/run_{today}/layered")
     MCP_NATIVE_DIR = Path(f"/home/exouser/client/mcp/benchmark_results/run_{today}/native")
@@ -121,23 +121,23 @@ def load_benchmark_data():
     # Load get_modelcard data for today's run
     get_modelcard_data = {
         'rest_db': pd.read_csv(REST_DIR / "get_modelcard_db.csv", header=None, names=['total_time']),
-        'rest_total': pd.read_csv(REST_DIR / "get_modelcard_rtt.csv")['response_time_ms'].to_frame(name='total_time'),
+        'rest_total': pd.read_csv(REST_DIR / "get_modelcard_rtt.csv")[['response_time_ms', 'response_size_kb']].rename(columns={'response_time_ms': 'total_time'}),
         'mcp_db': pd.read_csv(MCP_NATIVE_DIR / "get_modelcard_db.csv", header=None, names=['total_time']),
-        'mcp_total': pd.read_csv(MCP_NATIVE_DIR / "get_modelcard_rtt.csv")['response_time_ms'].to_frame(name='total_time'),
+        'mcp_total': pd.read_csv(MCP_NATIVE_DIR / "get_modelcard_rtt.csv")[['response_time_ms', 'response_size_kb']].rename(columns={'response_time_ms': 'total_time'}),
         'layered_mcp_db': pd.read_csv(MCP_LAYERED_DIR / "get_modelcard_db.csv", header=None, names=['total_time']),
         'layered_mcp_rest': pd.read_csv(MCP_LAYERED_DIR / "get_modelcard_rest.csv", header=None, names=['total_time']),
-        'layered_mcp_total': pd.read_csv(MCP_LAYERED_DIR / "get_modelcard_rtt.csv")['response_time_ms'].to_frame(name='total_time')
+        'layered_mcp_total': pd.read_csv(MCP_LAYERED_DIR / "get_modelcard_rtt.csv")[['response_time_ms', 'response_size_kb']].rename(columns={'response_time_ms': 'total_time'})
     }
     
     # For now, we only have get_modelcard data, so we'll return empty search data
     search_modelcards_data = {
         'rest_db': pd.DataFrame({'total_time': []}),
-        'rest_total': pd.DataFrame({'total_time': []}),
+        'rest_total': pd.DataFrame({'total_time': [], 'response_size_kb': []}),
         'mcp_db': pd.DataFrame({'total_time': []}),
-        'mcp_total': pd.DataFrame({'total_time': []}),
+        'mcp_total': pd.DataFrame({'total_time': [], 'response_size_kb': []}),
         'layered_mcp_db': pd.DataFrame({'total_time': []}),
         'layered_mcp_rest': pd.DataFrame({'total_time': []}),
-        'layered_mcp_total': pd.DataFrame({'total_time': []})
+        'layered_mcp_total': pd.DataFrame({'total_time': [], 'response_size_kb': []})
     }
     
     return get_modelcard_data, search_modelcards_data
@@ -154,24 +154,28 @@ def calculate_metrics(data_dict):
     rest_total = data_dict['rest_total']["total_time"].mean()
     rest_db = data_dict['rest_db']["total_time"].mean()
     rest_net = rest_total - rest_db
+    rest_response_size = data_dict['rest_total']["response_size_kb"].mean()
     
     # Native MCP metrics
     mcp_total = data_dict['mcp_total']["total_time"].mean()
     mcp_db = data_dict['mcp_db']["total_time"].mean()
     mcp_net = mcp_total - mcp_db
+    mcp_response_size = data_dict['mcp_total']["response_size_kb"].mean()
     
     # Layered MCP metrics - use REST network overhead and MCP network overhead
     layered_mcp_total = data_dict['layered_mcp_total']["total_time"].mean()
     layered_mcp_db = data_dict['layered_mcp_db']["total_time"].mean()
+    layered_mcp_response_size = data_dict['layered_mcp_total']["response_size_kb"].mean()
     # Use REST network overhead and MCP network overhead for layered MCP
     layered_mcp_rest_net = rest_net  # REST network overhead
     layered_mcp_mcp_net = mcp_net    # MCP network overhead
     
     return {
-        'rest': {'total': rest_total, 'db': rest_db, 'net': rest_net},
-        'native_mcp': {'total': mcp_total, 'db': mcp_db, 'net': mcp_net},
-        'layered_mcp': {'total': layered_mcp_total, 'db': layered_mcp_db, 'rest': layered_mcp_rest_net, 'net': layered_mcp_mcp_net}
+        'rest': {'total': rest_total, 'db': rest_db, 'net': rest_net, 'response_size_kb': rest_response_size},
+        'native_mcp': {'total': mcp_total, 'db': mcp_db, 'net': mcp_net, 'response_size_kb': mcp_response_size},
+        'layered_mcp': {'total': layered_mcp_total, 'db': layered_mcp_db, 'rest': layered_mcp_rest_net, 'net': layered_mcp_mcp_net, 'response_size_kb': layered_mcp_response_size}
     }
+
 
 def calculate_standard_deviations(data_dict):
     """Calculate standard deviations for error bars."""
@@ -283,10 +287,57 @@ def print_performance_summary(metrics, endpoint_name):
     native_mcp = metrics['native_mcp']
     layered_mcp = metrics['layered_mcp']
     
-    print(f"REST: total={rest['total']:.2f}ms, db={rest['db']:.2f}ms, net={rest['net']:.2f}ms")
-    print(f"Native MCP: total={native_mcp['total']:.2f}ms, db={native_mcp['db']:.2f}ms, net={native_mcp['net']:.2f}ms")
-    print(f"Layered MCP: total={layered_mcp['total']:.2f}ms, db={layered_mcp['db']:.2f}ms, "
-          f"rest={layered_mcp['rest']:.2f}ms, mcp={layered_mcp['net']:.2f}ms")
+    import csv
+
+    # Prepare metrics data for CSV
+    csv_data = [
+        {
+            'Implementation': 'REST',
+            'Response Size (KB)': rest['response_size_kb'].mean(),
+            'Total Latency (ms)': rest['total'],
+            'DB Latency (ms)': rest['db'],
+            'Network Latency (ms)': rest['net'],
+            'REST Layer (ms)': '',  # Not applicable
+            'MCP Layer (ms)': ''    # Not applicable
+        },
+        {
+            'Implementation': 'Native MCP',
+            'Response Size (KB)': native_mcp['response_size_kb'].mean(),
+            'Total Latency (ms)': native_mcp['total'],
+            'DB Latency (ms)': native_mcp['db'],
+            'Network Latency (ms)': native_mcp['net'],
+            'REST Layer (ms)': '',   # Not applicable
+            'MCP Layer (ms)': ''     # Not applicable
+        },
+        {
+            'Implementation': 'Layered MCP',
+            'Response Size (KB)': layered_mcp['response_size_kb'].mean(),
+            'Total Latency (ms)': layered_mcp['total'],
+            'DB Latency (ms)': layered_mcp['db'],
+            'Network Latency (ms)': layered_mcp['net'],  # This is MCP segment
+            'REST Layer (ms)': layered_mcp['rest'],
+            'MCP Layer (ms)': layered_mcp['net']
+        },
+    ]
+    fieldnames = [
+        'Implementation',
+        'Response Size (KB)',
+        'Total Latency (ms)',
+        'DB Latency (ms)',
+        'Network Latency (ms)',
+        'REST Layer (ms)',
+        'MCP Layer (ms)'
+    ]
+    # Compose output csv path
+    output_csv = f"/home/exouser/client/analysis/outputs/{endpoint_name.lower()}_metrics_summary.csv"
+    with open(output_csv, mode='a', newline='') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        # Only write header if file is empty
+        if csvfile.tell() == 0:
+            writer.writeheader()
+        for row in csv_data:
+            writer.writerow(row)
+    print(f"Performance metrics written to {output_csv}")
 
 # =============================================================================
 # MAIN EXECUTION
