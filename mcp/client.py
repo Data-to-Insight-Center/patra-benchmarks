@@ -40,11 +40,12 @@ async def run_benchmark(server_url, client_type, runs, modelcard_id, benchmark_r
             print(f"Running {runs + 1} get_modelcard calls (warm-up + {runs} measured)...")
             for i in range(runs + 1):
                 start = time.perf_counter()
-                result = await session.call_tool("get_modelcard", arguments={"mc_id": modelcard_id})
+                uri = f"modelcard://megadetector-mc"
+                result = await session.read_resource(uri)
                 end = time.perf_counter()
-                
+
                 response_time_ms = (end - start) * 1000
-                response_str = str(result)
+                response_str = result.contents[0].text
                 response_size_bytes = len(response_str.encode('utf-8'))
                 response_size_kb = response_size_bytes / 1024
                 

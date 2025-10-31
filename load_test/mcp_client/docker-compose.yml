@@ -1,0 +1,46 @@
+services:
+  mcp-client:
+    build: .
+    container_name: mcp_client_benchmark
+    volumes:
+      - ./experiments:/app/experiments:rw
+    command: >
+      sh -c "
+      echo '========================================';
+      echo 'Running Async MCP API Benchmarks';
+      echo '========================================';
+      echo '';
+      uv run run_experiment.py &&
+      LATEST=$$(ls -td /app/experiments/MCP_API_Concurrency_Analysis_* | head -1) &&
+      echo '' &&
+      echo '========================================' &&
+      echo 'Analyzing Results...' &&
+      echo '========================================' &&
+      uv run analyze_results.py $$LATEST &&
+      echo '' &&
+      echo '========================================' &&
+      echo 'Generating Visualizations...' &&
+      echo '========================================' &&
+      uv run visualize_results.py $$LATEST &&
+      echo '' &&
+      echo '========================================' &&
+      echo 'COMPLETE! Results saved to:' &&
+      basename $$LATEST &&
+      echo '========================================' &&
+      echo '' &&
+      echo 'View results:' &&
+      echo '  cat experiments/$$(basename $$LATEST)/analysis_report.txt' &&
+      echo '  ls experiments/$$(basename $$LATEST)/plots/' &&
+      echo ''
+      "
+    restart: "no"
+    deploy:
+      resources:
+        limits:
+          cpus: '3'
+          memory: 2G
+        reservations:
+          cpus: '1'
+          memory: 1G
+
+

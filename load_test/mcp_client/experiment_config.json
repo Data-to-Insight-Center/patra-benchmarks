@@ -1,0 +1,26 @@
+{
+  "experiment_name": "MCP_API_Concurrency_Analysis",
+  "description": "Comprehensive benchmarking from low to extreme concurrency (1-3000)",
+  "concurrency_levels": [1, 10, 50, 100, 500, 1500, 3000, 5000, 10000],
+  "trials_per_level": 3,
+  "requests_per_trial": 500,
+  "warmup_requests": 20,
+  "cooldown_seconds": 10,
+  "timeout_seconds": 300,
+  "server_url": "http://mcp-server:8050",
+  "note": "MCP client uses SSE transport - will connect to http://mcp-server:8050/sse",
+  "modelcard_id": "megadetector-mc",
+  "results_dir": "/app/experiments",
+  "percentiles": [50, 75, 90, 95, 99, 99.9],
+  "metadata": {
+    "test_scope": "Complete concurrency analysis from optimal to breaking point",
+    "client_description": "Docker container with MCP SDK client (3 CPU, 2GB RAM)",
+    "server_description": "MCP Server - Direct Neo4j access (4 CPU, 4GB RAM)",
+    "database": "Neo4j (6 CPU, 12GB RAM)",
+    "protocol": "MCP over SSE (Server-Sent Events)",
+    "network": "Docker bridge network",
+    "date": "2025-10-30",
+    "note": "Single comprehensive test replacing multi-level approach"
+  }
+}
+

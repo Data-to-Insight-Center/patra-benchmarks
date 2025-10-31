@@ -83,7 +83,7 @@ PLOT_CONFIG = {
     'fontsize': {
         'xticks': 10,
         'ylabel': 10,
-        'legend': 9
+        'legend': 7
     },
     'fontweight': {
         'xticks': 'bold',
@@ -113,10 +113,10 @@ def latest_run_dir(root: Path) -> Path:
 def load_benchmark_data():
     """Load all benchmark data from CSV files."""
     # Define directory paths for today's run
-    today = "2025_10_27"
-    REST_DIR = Path(f"/home/exouser/client/rest/benchmark_results/run_{today}")
-    MCP_LAYERED_DIR = Path(f"/home/exouser/client/mcp/benchmark_results/run_{today}/layered")
-    MCP_NATIVE_DIR = Path(f"/home/exouser/client/mcp/benchmark_results/run_{today}/native")
+    today = "2025_10_31"
+    REST_DIR = Path(f"/home/exouser/patra-benchmarks/rest/benchmark_results/run_{today}")
+    MCP_LAYERED_DIR = Path(f"/home/exouser/patra-benchmarks/mcp/benchmark_results/run_{today}/layered")
+    MCP_NATIVE_DIR = Path(f"/home/exouser/patra-benchmarks/mcp/benchmark_results/run_{today}/native")
     
     # Load get_modelcard data for today's run
     get_modelcard_data = {
@@ -164,16 +164,17 @@ def calculate_metrics(data_dict):
     
     # Layered MCP metrics - use REST network overhead and MCP network overhead
     layered_mcp_total = data_dict['layered_mcp_total']["total_time"].mean()
+    layered_mcp_rest = data_dict['layered_mcp_rest']["total_time"].mean()
     layered_mcp_db = data_dict['layered_mcp_db']["total_time"].mean()
     layered_mcp_response_size = data_dict['layered_mcp_total']["response_size_kb"].mean()
-    # Use REST network overhead and MCP network overhead for layered MCP
-    layered_mcp_rest_net = rest_net  # REST network overhead
-    layered_mcp_mcp_net = mcp_net    # MCP network overhead
+    
+    layered_mcp_rest_net = layered_mcp_rest - layered_mcp_db
+    layered_mcp_net = layered_mcp_total - layered_mcp_rest
     
     return {
         'rest': {'total': rest_total, 'db': rest_db, 'net': rest_net, 'response_size_kb': rest_response_size},
         'native_mcp': {'total': mcp_total, 'db': mcp_db, 'net': mcp_net, 'response_size_kb': mcp_response_size},
-        'layered_mcp': {'total': layered_mcp_total, 'db': layered_mcp_db, 'rest': layered_mcp_rest_net, 'net': layered_mcp_mcp_net, 'response_size_kb': layered_mcp_response_size}
+        'layered_mcp': {'total': layered_mcp_total, 'db': layered_mcp_db, 'rest': layered_mcp_rest_net, 'net': layered_mcp_net, 'response_size_kb': layered_mcp_response_size}
     }
 
 
@@ -261,7 +262,7 @@ def create_stacked_bar_plot(metrics, std_devs, title, output_path):
     # # Layered MCP error bars
     # plt.errorbar(x[2], layered_mcp['total'], yerr=layered_mcp_std['mcp_std'], 
     #             fmt='none', color='black', capsize=5, capthick=1.5, elinewidth=1.5)
-    # plt.errorbar(x[2], layered_mcp['rest'], yerr=layered_mcp_std['rest_std'], 
+    # plt.errorbar(x[2], layered_mcp['rest'] + layered_mcp['db'], yerr=layered_mcp_std['rest_std'], 
     #             fmt='none', color='black', capsize=5, capthick=1.5, elinewidth=1.5)
     # plt.errorbar(x[2], layered_mcp['db'], yerr=layered_mcp_std['db_std'], 
     #             fmt='none', color='black', capsize=5, capthick=1.5, elinewidth=1.5)
@@ -271,7 +272,7 @@ def create_stacked_bar_plot(metrics, std_devs, title, output_path):
     plt.xticks(x, ["REST", "Native\nMCP", "Layered\nMCP"], 
                fontsize=PLOT_CONFIG['fontsize']['xticks'], fontweight=PLOT_CONFIG['fontweight']['xticks'])
     plt.ylabel("Latency (ms)", fontsize=PLOT_CONFIG['fontsize']['ylabel'], fontweight=PLOT_CONFIG['fontweight']['ylabel'])
-    plt.legend(fontsize=PLOT_CONFIG['fontsize']['legend'], loc='upper left', 
+    plt.legend(fontsize=PLOT_CONFIG['fontsize']['legend'], loc='best', 
                frameon=True, framealpha=0.98, 
                edgecolor=COLORS['lightgray'], facecolor='white')
     plt.grid(True, alpha=0.5)
@@ -296,8 +297,7 @@ def print_performance_summary(metrics, endpoint_name):
             'Response Size (KB)': rest['response_size_kb'].mean(),
             'Total Latency (ms)': rest['total'],
             'DB Latency (ms)': rest['db'],
-            'Network Latency (ms)': rest['net'],
-            'REST Layer (ms)': '',  # Not applicable
+            'REST Layer (ms)': rest['net'],  # Not applicable
             'MCP Layer (ms)': ''    # Not applicable
         },
         {
@@ -305,16 +305,14 @@ def print_performance_summary(metrics, endpoint_name):
             'Response Size (KB)': native_mcp['response_size_kb'].mean(),
             'Total Latency (ms)': native_mcp['total'],
             'DB Latency (ms)': native_mcp['db'],
-            'Network Latency (ms)': native_mcp['net'],
             'REST Layer (ms)': '',   # Not applicable
-            'MCP Layer (ms)': ''     # Not applicable
+            'MCP Layer (ms)': native_mcp['net']
         },
         {
             'Implementation': 'Layered MCP',
             'Response Size (KB)': layered_mcp['response_size_kb'].mean(),
             'Total Latency (ms)': layered_mcp['total'],
             'DB Latency (ms)': layered_mcp['db'],
-            'Network Latency (ms)': layered_mcp['net'],  # This is MCP segment
             'REST Layer (ms)': layered_mcp['rest'],
             'MCP Layer (ms)': layered_mcp['net']
         },
@@ -324,12 +322,11 @@ def print_performance_summary(metrics, endpoint_name):
         'Response Size (KB)',
         'Total Latency (ms)',
         'DB Latency (ms)',
-        'Network Latency (ms)',
         'REST Layer (ms)',
         'MCP Layer (ms)'
     ]
     # Compose output csv path
-    output_csv = f"/home/exouser/client/analysis/outputs/{endpoint_name.lower()}_metrics_summary.csv"
+    output_csv = f"/home/exouser/patra-benchmarks/analysis/outputs/{endpoint_name.lower()}_metrics_summary.csv"
     with open(output_csv, mode='a', newline='') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         # Only write header if file is empty
@@ -353,7 +350,7 @@ def main():
     get_modelcard_std = calculate_standard_deviations(get_modelcard_data)
     
     # Create output directory if it doesn't exist
-    output_dir = Path("/home/exouser/client/analysis/outputs")
+    output_dir = Path("/home/exouser/patra-benchmarks/analysis/outputs")
     output_dir.mkdir(exist_ok=True)
     
     # Create get_modelcard plot

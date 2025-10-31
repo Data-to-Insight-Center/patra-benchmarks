@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
-      - BENCHMARK_RUNS=100
+      - BENCHMARK_RUNS=5000
       - MODELCARD_ID=megadetector-mc
       - SEARCH_QUERY=megadetector
       - BENCHMARK_RESULTS_DIR=/app/benchmark_results

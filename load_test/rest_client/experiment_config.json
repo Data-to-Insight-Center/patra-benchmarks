@@ -1,0 +1,23 @@
+{
+  "experiment_name": "REST_API_Concurrency_Analysis",
+  "description": "Comprehensive benchmarking from low to extreme concurrency (1-3000)",
+  "concurrency_levels": [1, 10, 50, 100, 500, 1500, 3000, 5000, 10000],
+  "trials_per_level": 1,
+  "requests_per_trial": 100,
+  "warmup_requests": 20,
+  "cooldown_seconds": 10,
+  "timeout_seconds": 300,
+  "server_url": "http://149.165.175.102:5002",
+  "modelcard_id": "megadetector-mc",
+  "results_dir": "/app/experiments",
+  "percentiles": [50, 75, 90, 95, 99, 99.9],
+  "metadata": {
+    "test_scope": "Complete concurrency analysis from optimal to breaking point",
+    "client_description": "Docker container with resource limits (3 CPU, 2GB RAM)",
+    "server_description": "FastAPI with async Neo4j driver (4 CPU, 4GB RAM)",
+    "database": "Neo4j (6 CPU, 12GB RAM)",
+    "network": "Docker bridge network",
+    "date": "2025-10-30",
+    "note": "Single comprehensive test replacing multi-level approach"
+  }
+}
