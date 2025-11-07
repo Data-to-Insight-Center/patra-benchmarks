@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """
-Side-by-side stacked bar plot comparing REST and MCP request latency breakdowns.
+Side-by-side stacked bar plot comparing REST, Native MCP, and Stacked MCP request latency breakdowns.
 Ignores latency components < 5ms for cleaner publication-ready plots.
-Labels are displayed directly on bars with contrasting colors.
+Labels are displayed directly on bars with black text on light backgrounds.
+Same components use consistent colors across all bars (e.g., Database Overhead is same color in all bars).
 """
 
 import csv
@@ -66,23 +67,21 @@ plt.rcParams.update({
     'mathtext.default': 'regular',
 })
 
-# Color scheme - high contrast colors for publication
+# Color scheme - consistent colors for same components across all bars
 COLORS = {
     'black': '#000000',      # Primary text/borders
-    'white': '#ffffff',      # Background/text on dark
-    # REST component colors
-    'dns': '#1f77b4',        # Strong blue
-    'tcp': '#ff7f0e',        # Bright orange
-    'tls': '#2ca02c',        # Green
-    'server': '#d62728',     # Red
-    'transfer': '#9467bd',   # Purple
-    'db': '#8c564b',         # Brown
-    # MCP component colors
-    'connection': '#1f77b4',  # Strong blue
-    'handshake': '#ff7f0e',   # Bright orange
-    'resource': '#2ca02c',    # Green
-    'rest_latency': '#d62728', # Red
-    'db_mcp': '#9467bd',      # Purple
+    'white': '#ffffff',      # Background
+    # Component-specific colors (used across REST, Stacked MCP, Native MCP)
+    'dns': '#AEC7E8',            # Light blue - DNS Lookup
+    'tcp': '#FFBB78',            # Light orange - TCP Connection
+    'tls': '#98DF8A',            # Light green - TLS Handshake
+    'connection': '#AEC7E8',     # Light blue - Connection Setup (same as DNS)
+    'handshake': '#FFBB78',      # Light orange - MCP Handshake (same as TCP)
+    'resource': '#98DF8A',       # Light green - Resource Read (same as TLS)
+    'server': '#FF9896',         # Light red - Server Overhead
+    'transfer': '#C5B0D5',       # Light purple - Content Transfer
+    'rest_overhead': '#FF9896',  # Light red - REST Overhead (same as Server)
+    'db': '#C49C94',             # Light brown - Database Overhead (consistent across all)
 }
 
 
@@ -109,24 +108,24 @@ def load_and_analyze_data(csv_file='curl_timing_results.csv', db_file='db.csv'):
     server_processing = [ttfbs[i] - time_pretransfers[i] for i in range(len(data))]
     content_transfer = [total_times[i] - ttfbs[i] for i in range(len(data))]
 
-    # Load database latency if available
+    # Load Database Overhead if available
     db_latencies = []
     try:
         with open(db_file, 'r') as f:
             db_latencies = [float(line.strip()) for line in f if line.strip()]
     except FileNotFoundError:
-        print(f"Warning: {db_file} not found, skipping database latency overlay")
+        print(f"Warning: {db_file} not found, skipping Database Overhead overlay")
 
     components = {
         'DNS Lookup': dns_lookups,
         'TCP Connection': tcp_only,
         'TLS Handshake': tls_handshakes,
-        'Server Processing': server_processing,
+        'Server Overhead': server_processing,
         'Content Transfer': content_transfer,
     }
 
     if db_latencies:
-        components['Database Latency'] = db_latencies
+        components['Database Overhead'] = db_latencies
 
     # Calculate statistics
     stats = {}
@@ -152,21 +151,21 @@ def load_and_analyze_mcp_data(csv_file='../mcp/mcp_timing_results.csv', db_file=
     handshakes = [float(row['handshake_ms']) for row in data]
     resources = [float(row['resource_read_ms']) for row in data]
 
-    # Load REST latency if available
+    # Load REST Overhead if available
     rest_latencies = []
     try:
         with open(rest_file, 'r') as f:
             rest_latencies = [float(line.strip()) for line in f if line.strip()]
     except FileNotFoundError:
-        print(f"Warning: {rest_file} not found, skipping REST latency overlay")
+        print(f"Warning: {rest_file} not found, skipping REST Overhead overlay")
 
-    # Load database latency if available
+    # Load Database Overhead if available
     db_latencies = []
     try:
         with open(db_file, 'r') as f:
             db_latencies = [float(line.strip()) for line in f if line.strip()]
     except FileNotFoundError:
-        print(f"Warning: {db_file} not found, skipping database latency overlay")
+        print(f"Warning: {db_file} not found, skipping Database Overhead overlay")
 
     components = {
         'Connection Setup': connections,
@@ -175,10 +174,51 @@ def load_and_analyze_mcp_data(csv_file='../mcp/mcp_timing_results.csv', db_file=
     }
 
     if rest_latencies:
-        components['REST Latency'] = rest_latencies
+        components['REST Overhead'] = rest_latencies
 
     if db_latencies:
-        components['Database Latency'] = db_latencies
+        components['Database Overhead'] = db_latencies
+
+    # Calculate statistics
+    stats = {}
+    for name, values in components.items():
+        stats[name] = {
+            'mean': statistics.mean(values),
+            'median': statistics.median(values),
+            'min': min(values),
+            'max': max(values),
+            'p95': sorted(values)[int(len(values) * 0.95)],
+        }
+
+    return stats
+
+def load_and_analyze_native_mcp_data(csv_file='../mcp/native_mcp_timing_results.csv', db_file='../mcp/native_mcp_db.csv'):
+    """Load Native MCP CSV data and calculate statistics."""
+    with open(csv_file, 'r') as f:
+        reader = csv.DictReader(f)
+        data = list(reader)
+
+    # Extract metrics
+    connections = [float(row['connection_ms']) for row in data]
+    handshakes = [float(row['handshake_ms']) for row in data]
+    resources = [float(row['resource_read_ms']) for row in data]
+
+    # Load database latency if available
+    db_latencies = []
+    try:
+        with open(db_file, 'r') as f:
+            db_latencies = [float(line.strip()) for line in f if line.strip()]
+    except FileNotFoundError:
+        print(f"Warning: {db_file} not found, skipping Database Overhead overlay")
+
+    components = {
+        'Connection Setup': connections,
+        'MCP Handshake': handshakes,
+        'Resource Read': resources,
+    }
+
+    if db_latencies:
+        components['Database Overhead'] = db_latencies
 
     # Calculate statistics
     stats = {}
@@ -197,89 +237,128 @@ def load_and_analyze_mcp_data(csv_file='../mcp/mcp_timing_results.csv', db_file=
 # VISUALIZATION FUNCTIONS
 # =============================================================================
 
-def create_comparison_plot(rest_stats, mcp_stats, output_path='latency_comparison.png'):
-    """Create side-by-side stacked bar plots comparing REST and MCP latency breakdowns."""
+def create_comparison_plot(rest_stats, stacked_mcp_stats, native_mcp_stats, output_path='latency_comparison.png'):
+    """Create side-by-side stacked bar plots comparing REST, Native MCP, and Stacked MCP latency breakdowns."""
 
-    fig, ax = plt.subplots(figsize=(6, 3.5))
+    fig, ax = plt.subplots(figsize=(5, 3.5))
 
-    # Define REST components with colors
+    # Define REST components - each component has its own color
+    # Using 2-line labels for better fit
     rest_components = [
-        ('DNS Lookup', COLORS['dns']),
-        ('TCP Connection', COLORS['tcp']),
-        ('TLS Handshake', COLORS['tls']),
-        ('Server Processing', COLORS['server']),
-        ('Content Transfer', COLORS['transfer']),
+        ('DNS Lookup', 'DNS\nLookup', COLORS['dns']),
+        ('TCP Connection', 'TCP\nConnection', COLORS['tcp']),
+        ('TLS Handshake', 'TLS\nHandshake', COLORS['tls']),
+        ('Server Overhead', 'Server\nOverhead', COLORS['server']),
+        ('Content Transfer', 'Content\nTransfer', COLORS['transfer']),
     ]
-    if 'Database Latency' in rest_stats:
-        rest_components.insert(4, ('Database Latency', COLORS['db']))
+    if 'Database Overhead' in rest_stats:
+        rest_components.insert(4, ('Database Overhead', 'Database\nOverhead', COLORS['db']))
 
-    # Define MCP components with colors
-    mcp_components = [
-        ('Connection Setup', COLORS['connection']),
-        ('MCP Handshake', COLORS['handshake']),
-        ('Resource Read', COLORS['resource']),
+    # Define Native MCP components - each component has its own color
+    # Using 2-line labels for better fit
+    native_mcp_components = [
+        ('Connection Setup', 'Connection\nSetup', COLORS['connection']),
+        ('MCP Handshake', 'MCP\nHandshake', COLORS['handshake']),
+        ('Resource Read', 'Resource\nRead', COLORS['resource']),
     ]
-    if 'REST Latency' in mcp_stats:
-        mcp_components.append(('REST Latency', COLORS['rest_latency']))
-    if 'Database Latency' in mcp_stats:
-        mcp_components.append(('Database Latency', COLORS['db_mcp']))
+    if 'Database Overhead' in native_mcp_stats:
+        native_mcp_components.append(('Database Overhead', 'Database\nOverhead', COLORS['db']))
+
+    # Define Stacked MCP components - each component has its own color
+    # Using 2-line labels for better fit
+    stacked_mcp_components = [
+        ('Connection Setup', 'Connection\nSetup', COLORS['connection']),
+        ('MCP Handshake', 'MCP\nHandshake', COLORS['handshake']),
+        ('Resource Read', 'Resource\nRead', COLORS['resource']),
+    ]
+    if 'REST Overhead' in stacked_mcp_stats:
+        stacked_mcp_components.append(('REST Overhead', 'REST\nOverhead', COLORS['rest_overhead']))
+    if 'Database Overhead' in stacked_mcp_stats:
+        stacked_mcp_components.append(('Database Overhead', 'Database\nOverhead', COLORS['db']))
 
     # Filter REST components >= 5ms
     rest_significant = []
-    for label, color in rest_components:
+    for label, display_label, color in rest_components:
         if label in rest_stats:
             duration = rest_stats[label]['mean']
             if duration >= 5.0:
-                rest_significant.append((label, color, duration))
+                rest_significant.append((display_label, color, duration))
 
-    # Filter MCP components >= 5ms
-    mcp_significant = []
-    for label, color in mcp_components:
-        if label in mcp_stats:
-            duration = mcp_stats[label]['mean']
+    # Filter Native MCP components >= 5ms
+    native_mcp_significant = []
+    for label, display_label, color in native_mcp_components:
+        if label in native_mcp_stats:
+            duration = native_mcp_stats[label]['mean']
             if duration >= 5.0:
-                mcp_significant.append((label, color, duration))
+                native_mcp_significant.append((display_label, color, duration))
+
+    # Filter Stacked MCP components >= 5ms
+    stacked_mcp_significant = []
+    for label, display_label, color in stacked_mcp_components:
+        if label in stacked_mcp_stats:
+            duration = stacked_mcp_stats[label]['mean']
+            if duration >= 5.0:
+                stacked_mcp_significant.append((display_label, color, duration))
 
     # Create REST stacked bar
-    bar_width = 0.35
+    bar_width = 0.25
     rest_x = 0
     bottom = 0
-    for label, color, height in rest_significant:
+    for display_label, color, height in rest_significant:
         ax.bar(rest_x, height, bottom=bottom, color=color,
               edgecolor=COLORS['black'], linewidth=1.2, alpha=1.0,
               width=bar_width)
 
-        # Add text label on the bar
-        ax.text(rest_x, bottom + height/2, label,
-               ha='center', va='center', fontsize=8, fontweight='bold',
-               color=COLORS['white'])
+        # Add text label on the bar - single line if < 100ms, two lines otherwise
+        label_text = display_label.replace('\n', ' ') if height < 100 else display_label
+        ax.text(rest_x, bottom + height/2, label_text,
+               ha='center', va='center', fontsize=6, fontweight='bold',
+               color=COLORS['black'])
 
         bottom += height
 
-    # Create MCP stacked bar
-    mcp_x = 0.5
+    # Create Native MCP bar (next to REST)
+    native_mcp_x = 0.35
     bottom = 0
-    for label, color, height in mcp_significant:
-        ax.bar(mcp_x, height, bottom=bottom, color=color,
+    for display_label, color, height in native_mcp_significant:
+        ax.bar(native_mcp_x, height, bottom=bottom, color=color,
               edgecolor=COLORS['black'], linewidth=1.2, alpha=1.0,
               width=bar_width)
 
-        # Add text label on the bar
-        ax.text(mcp_x, bottom + height/2, label,
-               ha='center', va='center', fontsize=8, fontweight='bold',
-               color=COLORS['white'])
+        # Add text label on the bar - single line if < 100ms, two lines otherwise
+        label_text = display_label.replace('\n', ' ') if height < 100 else display_label
+        ax.text(native_mcp_x, bottom + height/2, label_text,
+               ha='center', va='center', fontsize=6, fontweight='bold',
+               color=COLORS['black'])
+
+        bottom += height
+
+    # Create Stacked MCP bar
+    stacked_mcp_x = 0.7
+    bottom = 0
+    for display_label, color, height in stacked_mcp_significant:
+        ax.bar(stacked_mcp_x, height, bottom=bottom, color=color,
+              edgecolor=COLORS['black'], linewidth=1.2, alpha=1.0,
+              width=bar_width)
+
+        # Add text label on the bar - single line if < 100ms, two lines otherwise
+        label_text = display_label.replace('\n', ' ') if height < 100 else display_label
+        ax.text(stacked_mcp_x, bottom + height/2, label_text,
+               ha='center', va='center', fontsize=6, fontweight='bold',
+               color=COLORS['black'])
 
         bottom += height
 
     # Configure axes
-    ax.set_xticks([rest_x, mcp_x])
-    ax.set_xticklabels(['REST', 'MCP'], fontsize=10, fontweight='bold')
+    ax.set_xticks([rest_x, native_mcp_x, stacked_mcp_x])
+    ax.set_xticklabels(['REST', 'Native MCP', 'Stacked MCP'], fontsize=10, fontweight='bold')
     ax.set_ylabel('Latency (ms)', fontsize=10, fontweight='bold')
 
     # Set y-axis limit with some padding
     max_height = max(
         sum(h for _, _, h in rest_significant),
-        sum(h for _, _, h in mcp_significant)
+        sum(h for _, _, h in native_mcp_significant),
+        sum(h for _, _, h in stacked_mcp_significant)
     )
     ax.set_ylim(0, max_height * 1.1)
 
@@ -295,20 +374,24 @@ def create_comparison_plot(rest_stats, mcp_stats, output_path='latency_compariso
 def main():
     """Main execution function."""
     print("="*80)
-    print("Creating REST vs MCP Latency Comparison Plot")
+    print("Creating REST vs Stacked MCP vs Native MCP Latency Comparison Plot")
     print("="*80)
 
     # Load and analyze REST data
     print("\nLoading REST data...")
     rest_stats = load_and_analyze_data()
 
-    # Load and analyze MCP data
-    print("Loading MCP data...")
-    mcp_stats = load_and_analyze_mcp_data()
+    # Load and analyze Stacked MCP data
+    print("Loading Stacked MCP data...")
+    stacked_mcp_stats = load_and_analyze_mcp_data()
+
+    # Load and analyze Native MCP data
+    print("Loading Native MCP data...")
+    native_mcp_stats = load_and_analyze_native_mcp_data()
 
     # Create comparison plot
     output_file = 'latency_comparison.png'
-    create_comparison_plot(rest_stats, mcp_stats, output_file)
+    create_comparison_plot(rest_stats, stacked_mcp_stats, native_mcp_stats, output_file)
 
     print("\n" + "="*80)
     print("Visualization created successfully!")

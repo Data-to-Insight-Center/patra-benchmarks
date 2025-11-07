@@ -18,15 +18,25 @@ from mcp.client.sse import sse_client
 
 
 # Configuration
-SERVER_URL = "http://149.165.175.102:8051"  # Update with actual MCP server URL
-SSE_URL = f"{SERVER_URL}/sse"
-MODELCARD_ID = "megadetector-mc"
+MODELCARD_ID = "megadetector-mc-9aaede5b"
 NUM_REQUESTS = 100
-OUTPUT_FILE = "mcp_timing_results.txt"
-CSV_FILE = "mcp_timing_results.csv"
+
+# Benchmark configurations
+BENCHMARKS = [
+    {
+        'name': 'Native MCP',
+        'server_url': 'http://149.165.175.102:8050',
+        'csv_file': 'native_mcp_timing_results.csv'
+    },
+    {
+        'name': 'MCP',
+        'server_url': 'http://149.165.175.102:8051',
+        'csv_file': 'mcp_timing_results.csv'
+    }
+]
 
 
-async def single_timed_request(request_id: int) -> dict:
+async def single_timed_request(request_id: int, sse_url: str) -> dict:
     """Execute a single MCP request with timing breakdown."""
     timings = {
         'request_id': request_id,
@@ -42,7 +52,7 @@ async def single_timed_request(request_id: int) -> dict:
     try:
         # Phase 1: SSE Connection
         start_connection = time.perf_counter()
-        transport = sse_client(url=SSE_URL)
+        transport = sse_client(url=sse_url)
         read_stream, write_stream = await transport.__aenter__()
         session = ClientSession(read_stream, write_stream)
         await session.__aenter__()
@@ -81,24 +91,20 @@ async def single_timed_request(request_id: int) -> dict:
     return timings
 
 
-async def run_benchmark():
-    """Run the complete benchmark."""
-    print(f"Running {NUM_REQUESTS} MCP requests with timing breakdown...")
-    print(f"Server URL: {SSE_URL}")
-    print(f"Results will be saved to: {OUTPUT_FILE} and {CSV_FILE}")
+async def run_benchmark(benchmark_name: str, server_url: str, csv_file: str):
+    """Run the complete benchmark for a given configuration."""
+    sse_url = f"{server_url}/sse"
+
+    print(f"\n{'=' * 70}")
+    print(f"Running {benchmark_name} benchmark")
+    print(f"{'=' * 70}")
+    print(f"Server URL: {sse_url}")
+    print(f"Requests: {NUM_REQUESTS}")
+    print(f"Results will be saved to: {csv_file}")
     print("")
 
-    # Clear output files
-    with open(OUTPUT_FILE, 'w') as f:
-        f.write("=" * 70 + "\n")
-        f.write(f"MCP Timing Breakdown - {NUM_REQUESTS} Requests\n")
-        f.write(f"Server URL: {SSE_URL}\n")
-        f.write(f"ModelCard ID: {MODELCARD_ID}\n")
-        f.write(f"Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
-        f.write("=" * 70 + "\n\n")
-
-    # CSV header
-    with open(CSV_FILE, 'w', newline='') as f:
+    # Initialize CSV file with header
+    with open(csv_file, 'w', newline='') as f:
         writer = csv.writer(f)
         writer.writerow([
             'request_id',
@@ -113,30 +119,21 @@ async def run_benchmark():
     print("Running warm-up phase (10 requests)...")
     for i in range(1, 11):
         print(f"Warm-up request {i}/10... ", end='', flush=True)
-        await single_timed_request(0)  # Request ID 0 for warm-up
+        await single_timed_request(0, sse_url)  # Request ID 0 for warm-up
         print("Done")
     print("Warm-up complete! Starting measurements...")
     print("")
 
-    # Run requests sequentially (like curl script)
+    # Run requests sequentially
     results = []
     for i in range(1, NUM_REQUESTS + 1):
         print(f"Request {i}/{NUM_REQUESTS}... ", end='', flush=True)
 
-        timing = await single_timed_request(i)
+        timing = await single_timed_request(i, sse_url)
         results.append(timing)
 
-        # Write to text file
-        with open(OUTPUT_FILE, 'a') as f:
-            f.write(f"--- Request {i} ---\n")
-            f.write(f"SSE Connection:        {timing['connection_ms']:.3f} ms\n")
-            f.write(f"MCP Handshake:         {timing['handshake_ms']:.3f} ms\n")
-            f.write(f"Resource Read:         {timing['resource_read_ms']:.3f} ms\n")
-            f.write(f"Total Time:            {timing['total_time_ms']:.3f} ms\n")
-            f.write(f"Status:                {timing['status']}\n\n")
-
         # Write to CSV
-        with open(CSV_FILE, 'a', newline='') as f:
+        with open(csv_file, 'a', newline='') as f:
             writer = csv.writer(f)
             writer.writerow([
                 timing['request_id'],
@@ -149,17 +146,9 @@ async def run_benchmark():
 
         print("Done")
 
-    # Final summary
-    with open(OUTPUT_FILE, 'a') as f:
-        f.write("\n" + "=" * 70 + "\n")
-        f.write("Benchmark Complete!\n")
-        f.write("=" * 70 + "\n")
-
     print("")
-    print("Benchmark complete!")
-    print("Results saved to:")
-    print(f"  - Text format: {OUTPUT_FILE}")
-    print(f"  - CSV format:  {CSV_FILE}")
+    print(f"{benchmark_name} benchmark complete!")
+    print(f"Results saved to: {csv_file}")
 
     # Calculate and print summary statistics
     successful = [r for r in results if r['status'] == 'success']
@@ -176,5 +165,25 @@ async def run_benchmark():
         print(f"  Avg Total Time:        {avg_total:.3f} ms")
 
 
+async def main():
+    """Run all benchmarks sequentially."""
+    print("=" * 70)
+    print("MCP Timing Benchmark Suite")
+    print(f"Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"ModelCard ID: {MODELCARD_ID}")
+    print("=" * 70)
+
+    for benchmark in BENCHMARKS:
+        await run_benchmark(
+            benchmark_name=benchmark['name'],
+            server_url=benchmark['server_url'],
+            csv_file=benchmark['csv_file']
+        )
+
+    print("\n" + "=" * 70)
+    print("All benchmarks complete!")
+    print("=" * 70)
+
+
 if __name__ == "__main__":
-    asyncio.run(run_benchmark())
+    asyncio.run(main())
