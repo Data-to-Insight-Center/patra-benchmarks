@@ -1,7 +1,13 @@
 {
   "experiment_name": "MCP_API_Concurrency_Analysis",
   "description": "Comprehensive benchmarking from low to extreme concurrency (1-10000)",
-  "concurrency_levels": [1, 10, 100, 1000, 10000],
+  "concurrency_levels": [
+    1,
+    10,
+    100,
+    1000,
+    10000
+  ],
   "trials_per_level": 1,
   "requests_per_trial": 100,
   "warmup_requests": 20,
@@ -11,7 +17,14 @@
   "note": "MCP client uses SSE transport - will connect to http://149.165.175.102:8050/sse",
   "modelcard_id": "megadetector-mc",
   "results_dir": "/app/experiments",
-  "percentiles": [50, 75, 90, 95, 99, 99.9],
+  "percentiles": [
+    50,
+    75,
+    90,
+    95,
+    99,
+    99.9
+  ],
   "metadata": {
     "test_scope": "Complete concurrency analysis from optimal to breaking point",
     "client_description": "Docker container with MCP SDK client (3 CPU, 2GB RAM)",
@@ -23,4 +36,3 @@
     "note": "Single comprehensive test replacing multi-level approach"
   }
 }
-

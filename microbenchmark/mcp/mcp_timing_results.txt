@@ -1,0 +1,711 @@
+======================================================================
+MCP Timing Breakdown - 100 Requests
+Server URL: http://149.165.175.102:8051/sse
+ModelCard ID: megadetector-mc
+Date: 2025-10-31 19:16:54
+======================================================================
+
+--- Request 1 ---
+SSE Connection:        222.966 ms
+MCP Handshake:         199.879 ms
+Resource Read:         255.017 ms
+Total Time:            678.325 ms
+Status:                success
+
+--- Request 2 ---
+SSE Connection:        222.584 ms
+MCP Handshake:         199.262 ms
+Resource Read:         234.439 ms
+Total Time:            656.974 ms
+Status:                success
+
+--- Request 3 ---
+SSE Connection:        222.693 ms
+MCP Handshake:         199.680 ms
+Resource Read:         241.743 ms
+Total Time:            664.550 ms
+Status:                success
+
+--- Request 4 ---
+SSE Connection:        220.726 ms
+MCP Handshake:         197.868 ms
+Resource Read:         232.441 ms
+Total Time:            651.611 ms
+Status:                success
+
+--- Request 5 ---
+SSE Connection:        222.428 ms
+MCP Handshake:         199.142 ms
+Resource Read:         233.138 ms
+Total Time:            655.253 ms
+Status:                success
+
+--- Request 6 ---
+SSE Connection:        221.961 ms
+MCP Handshake:         198.709 ms
+Resource Read:         232.735 ms
+Total Time:            654.002 ms
+Status:                success
+
+--- Request 7 ---
+SSE Connection:        222.919 ms
+MCP Handshake:         199.534 ms
+Resource Read:         232.750 ms
+Total Time:            655.928 ms
+Status:                success
+
+--- Request 8 ---
+SSE Connection:        221.890 ms
+MCP Handshake:         198.457 ms
+Resource Read:         237.746 ms
+Total Time:            658.552 ms
+Status:                success
+
+--- Request 9 ---
+SSE Connection:        223.856 ms
+MCP Handshake:         199.756 ms
+Resource Read:         240.409 ms
+Total Time:            664.463 ms
+Status:                success
+
+--- Request 10 ---
+SSE Connection:        222.207 ms
+MCP Handshake:         198.320 ms
+Resource Read:         235.161 ms
+Total Time:            656.295 ms
+Status:                success
+
+--- Request 11 ---
+SSE Connection:        222.694 ms
+MCP Handshake:         200.086 ms
+Resource Read:         233.474 ms
+Total Time:            656.944 ms
+Status:                success
+
+--- Request 12 ---
+SSE Connection:        222.291 ms
+MCP Handshake:         198.665 ms
+Resource Read:         243.527 ms
+Total Time:            664.950 ms
+Status:                success
+
+--- Request 13 ---
+SSE Connection:        222.621 ms
+MCP Handshake:         199.608 ms
+Resource Read:         234.971 ms
+Total Time:            657.703 ms
+Status:                success
+
+--- Request 14 ---
+SSE Connection:        222.220 ms
+MCP Handshake:         198.315 ms
+Resource Read:         233.691 ms
+Total Time:            654.913 ms
+Status:                success
+
+--- Request 15 ---
+SSE Connection:        223.307 ms
+MCP Handshake:         209.095 ms
+Resource Read:         235.614 ms
+Total Time:            668.450 ms
+Status:                success
+
+--- Request 16 ---
+SSE Connection:        221.824 ms
+MCP Handshake:         198.746 ms
+Resource Read:         232.477 ms
+Total Time:            653.738 ms
+Status:                success
+
+--- Request 17 ---
+SSE Connection:        221.637 ms
+MCP Handshake:         199.382 ms
+Resource Read:         229.379 ms
+Total Time:            651.085 ms
+Status:                success
+
+--- Request 18 ---
+SSE Connection:        220.849 ms
+MCP Handshake:         198.154 ms
+Resource Read:         229.587 ms
+Total Time:            649.216 ms
+Status:                success
+
+--- Request 19 ---
+SSE Connection:        221.100 ms
+MCP Handshake:         199.400 ms
+Resource Read:         230.725 ms
+Total Time:            651.968 ms
+Status:                success
+
+--- Request 20 ---
+SSE Connection:        221.991 ms
+MCP Handshake:         198.233 ms
+Resource Read:         230.033 ms
+Total Time:            650.803 ms
+Status:                success
+
+--- Request 21 ---
+SSE Connection:        222.845 ms
+MCP Handshake:         199.569 ms
+Resource Read:         230.942 ms
+Total Time:            653.821 ms
+Status:                success
+
+--- Request 22 ---
+SSE Connection:        221.842 ms
+MCP Handshake:         197.907 ms
+Resource Read:         229.566 ms
+Total Time:            649.939 ms
+Status:                success
+
+--- Request 23 ---
+SSE Connection:        221.793 ms
+MCP Handshake:         199.425 ms
+Resource Read:         229.073 ms
+Total Time:            651.014 ms
+Status:                success
+
+--- Request 24 ---
+SSE Connection:        221.929 ms
+MCP Handshake:         198.642 ms
+Resource Read:         241.488 ms
+Total Time:            662.502 ms
+Status:                success
+
+--- Request 25 ---
+SSE Connection:        222.567 ms
+MCP Handshake:         199.706 ms
+Resource Read:         241.657 ms
+Total Time:            664.711 ms
+Status:                success
+
+--- Request 26 ---
+SSE Connection:        221.991 ms
+MCP Handshake:         198.649 ms
+Resource Read:         231.952 ms
+Total Time:            653.039 ms
+Status:                success
+
+--- Request 27 ---
+SSE Connection:        221.424 ms
+MCP Handshake:         199.417 ms
+Resource Read:         228.669 ms
+Total Time:            650.222 ms
+Status:                success
+
+--- Request 28 ---
+SSE Connection:        221.829 ms
+MCP Handshake:         198.467 ms
+Resource Read:         235.409 ms
+Total Time:            656.296 ms
+Status:                success
+
+--- Request 29 ---
+SSE Connection:        221.767 ms
+MCP Handshake:         199.594 ms
+Resource Read:         249.098 ms
+Total Time:            671.079 ms
+Status:                success
+
+--- Request 30 ---
+SSE Connection:        223.337 ms
+MCP Handshake:         198.864 ms
+Resource Read:         232.366 ms
+Total Time:            655.175 ms
+Status:                success
+
+--- Request 31 ---
+SSE Connection:        221.162 ms
+MCP Handshake:         200.776 ms
+Resource Read:         229.793 ms
+Total Time:            652.204 ms
+Status:                success
+
+--- Request 32 ---
+SSE Connection:        223.306 ms
+MCP Handshake:         198.136 ms
+Resource Read:         227.561 ms
+Total Time:            649.801 ms
+Status:                success
+
+--- Request 33 ---
+SSE Connection:        221.495 ms
+MCP Handshake:         199.608 ms
+Resource Read:         227.061 ms
+Total Time:            648.638 ms
+Status:                success
+
+--- Request 34 ---
+SSE Connection:        221.233 ms
+MCP Handshake:         197.921 ms
+Resource Read:         230.870 ms
+Total Time:            650.654 ms
+Status:                success
+
+--- Request 35 ---
+SSE Connection:        221.393 ms
+MCP Handshake:         199.521 ms
+Resource Read:         226.814 ms
+Total Time:            648.265 ms
+Status:                success
+
+--- Request 36 ---
+SSE Connection:        222.654 ms
+MCP Handshake:         198.822 ms
+Resource Read:         240.469 ms
+Total Time:            662.433 ms
+Status:                success
+
+--- Request 37 ---
+SSE Connection:        221.404 ms
+MCP Handshake:         199.453 ms
+Resource Read:         230.199 ms
+Total Time:            651.687 ms
+Status:                success
+
+--- Request 38 ---
+SSE Connection:        222.062 ms
+MCP Handshake:         198.053 ms
+Resource Read:         226.768 ms
+Total Time:            647.362 ms
+Status:                success
+
+--- Request 39 ---
+SSE Connection:        221.647 ms
+MCP Handshake:         210.410 ms
+Resource Read:         233.069 ms
+Total Time:            665.824 ms
+Status:                success
+
+--- Request 40 ---
+SSE Connection:        222.112 ms
+MCP Handshake:         198.355 ms
+Resource Read:         228.521 ms
+Total Time:            649.426 ms
+Status:                success
+
+--- Request 41 ---
+SSE Connection:        220.728 ms
+MCP Handshake:         198.849 ms
+Resource Read:         228.274 ms
+Total Time:            648.325 ms
+Status:                success
+
+--- Request 42 ---
+SSE Connection:        222.120 ms
+MCP Handshake:         198.999 ms
+Resource Read:         239.042 ms
+Total Time:            660.648 ms
+Status:                success
+
+--- Request 43 ---
+SSE Connection:        221.520 ms
+MCP Handshake:         199.857 ms
+Resource Read:         230.373 ms
+Total Time:            652.405 ms
+Status:                success
+
+--- Request 44 ---
+SSE Connection:        221.754 ms
+MCP Handshake:         198.055 ms
+Resource Read:         227.932 ms
+Total Time:            648.233 ms
+Status:                success
+
+--- Request 45 ---
+SSE Connection:        221.111 ms
+MCP Handshake:         199.710 ms
+Resource Read:         226.319 ms
+Total Time:            647.857 ms
+Status:                success
+
+--- Request 46 ---
+SSE Connection:        221.393 ms
+MCP Handshake:         198.704 ms
+Resource Read:         226.071 ms
+Total Time:            646.817 ms
+Status:                success
+
+--- Request 47 ---
+SSE Connection:        222.007 ms
+MCP Handshake:         200.147 ms
+Resource Read:         229.147 ms
+Total Time:            651.787 ms
+Status:                success
+
+--- Request 48 ---
+SSE Connection:        221.910 ms
+MCP Handshake:         198.566 ms
+Resource Read:         239.281 ms
+Total Time:            660.206 ms
+Status:                success
+
+--- Request 49 ---
+SSE Connection:        221.787 ms
+MCP Handshake:         199.335 ms
+Resource Read:         228.846 ms
+Total Time:            650.648 ms
+Status:                success
+
+--- Request 50 ---
+SSE Connection:        222.337 ms
+MCP Handshake:         198.229 ms
+Resource Read:         229.152 ms
+Total Time:            650.301 ms
+Status:                success
+
+--- Request 51 ---
+SSE Connection:        221.566 ms
+MCP Handshake:         199.635 ms
+Resource Read:         227.870 ms
+Total Time:            649.812 ms
+Status:                success
+
+--- Request 52 ---
+SSE Connection:        221.443 ms
+MCP Handshake:         198.592 ms
+Resource Read:         226.439 ms
+Total Time:            647.116 ms
+Status:                success
+
+--- Request 53 ---
+SSE Connection:        221.660 ms
+MCP Handshake:         199.842 ms
+Resource Read:         226.892 ms
+Total Time:            649.095 ms
+Status:                success
+
+--- Request 54 ---
+SSE Connection:        221.284 ms
+MCP Handshake:         198.466 ms
+Resource Read:         232.115 ms
+Total Time:            652.320 ms
+Status:                success
+
+--- Request 55 ---
+SSE Connection:        221.127 ms
+MCP Handshake:         199.946 ms
+Resource Read:         225.793 ms
+Total Time:            647.326 ms
+Status:                success
+
+--- Request 56 ---
+SSE Connection:        220.933 ms
+MCP Handshake:         198.718 ms
+Resource Read:         226.746 ms
+Total Time:            646.905 ms
+Status:                success
+
+--- Request 57 ---
+SSE Connection:        221.071 ms
+MCP Handshake:         199.143 ms
+Resource Read:         228.578 ms
+Total Time:            649.271 ms
+Status:                success
+
+--- Request 58 ---
+SSE Connection:        221.934 ms
+MCP Handshake:         198.621 ms
+Resource Read:         228.247 ms
+Total Time:            649.461 ms
+Status:                success
+
+--- Request 59 ---
+SSE Connection:        220.316 ms
+MCP Handshake:         199.744 ms
+Resource Read:         231.689 ms
+Total Time:            652.254 ms
+Status:                success
+
+--- Request 60 ---
+SSE Connection:        222.010 ms
+MCP Handshake:         198.062 ms
+Resource Read:         239.805 ms
+Total Time:            660.660 ms
+Status:                success
+
+--- Request 61 ---
+SSE Connection:        221.432 ms
+MCP Handshake:         199.851 ms
+Resource Read:         228.827 ms
+Total Time:            650.649 ms
+Status:                success
+
+--- Request 62 ---
+SSE Connection:        222.405 ms
+MCP Handshake:         198.540 ms
+Resource Read:         226.237 ms
+Total Time:            647.654 ms
+Status:                success
+
+--- Request 63 ---
+SSE Connection:        222.085 ms
+MCP Handshake:         209.915 ms
+Resource Read:         224.946 ms
+Total Time:            657.445 ms
+Status:                success
+
+--- Request 64 ---
+SSE Connection:        222.136 ms
+MCP Handshake:         198.414 ms
+Resource Read:         231.650 ms
+Total Time:            652.682 ms
+Status:                success
+
+--- Request 65 ---
+SSE Connection:        221.189 ms
+MCP Handshake:         199.512 ms
+Resource Read:         226.094 ms
+Total Time:            647.419 ms
+Status:                success
+
+--- Request 66 ---
+SSE Connection:        222.286 ms
+MCP Handshake:         197.924 ms
+Resource Read:         225.490 ms
+Total Time:            646.313 ms
+Status:                success
+
+--- Request 67 ---
+SSE Connection:        221.370 ms
+MCP Handshake:         199.389 ms
+Resource Read:         227.267 ms
+Total Time:            648.460 ms
+Status:                success
+
+--- Request 68 ---
+SSE Connection:        220.918 ms
+MCP Handshake:         198.073 ms
+Resource Read:         225.478 ms
+Total Time:            644.902 ms
+Status:                success
+
+--- Request 69 ---
+SSE Connection:        221.554 ms
+MCP Handshake:         199.686 ms
+Resource Read:         226.926 ms
+Total Time:            648.807 ms
+Status:                success
+
+--- Request 70 ---
+SSE Connection:        222.317 ms
+MCP Handshake:         198.504 ms
+Resource Read:         229.601 ms
+Total Time:            651.075 ms
+Status:                success
+
+--- Request 71 ---
+SSE Connection:        221.469 ms
+MCP Handshake:         199.484 ms
+Resource Read:         227.391 ms
+Total Time:            648.904 ms
+Status:                success
+
+--- Request 72 ---
+SSE Connection:        220.989 ms
+MCP Handshake:         197.772 ms
+Resource Read:         237.392 ms
+Total Time:            656.681 ms
+Status:                success
+
+--- Request 73 ---
+SSE Connection:        222.203 ms
+MCP Handshake:         200.471 ms
+Resource Read:         227.529 ms
+Total Time:            650.728 ms
+Status:                success
+
+--- Request 74 ---
+SSE Connection:        221.128 ms
+MCP Handshake:         198.411 ms
+Resource Read:         228.110 ms
+Total Time:            648.198 ms
+Status:                success
+
+--- Request 75 ---
+SSE Connection:        222.024 ms
+MCP Handshake:         198.981 ms
+Resource Read:         232.146 ms
+Total Time:            653.848 ms
+Status:                success
+
+--- Request 76 ---
+SSE Connection:        222.199 ms
+MCP Handshake:         198.671 ms
+Resource Read:         235.738 ms
+Total Time:            657.265 ms
+Status:                success
+
+--- Request 77 ---
+SSE Connection:        221.491 ms
+MCP Handshake:         199.696 ms
+Resource Read:         228.095 ms
+Total Time:            649.988 ms
+Status:                success
+
+--- Request 78 ---
+SSE Connection:        222.232 ms
+MCP Handshake:         198.402 ms
+Resource Read:         228.161 ms
+Total Time:            649.326 ms
+Status:                success
+
+--- Request 79 ---
+SSE Connection:        221.152 ms
+MCP Handshake:         199.228 ms
+Resource Read:         226.859 ms
+Total Time:            647.907 ms
+Status:                success
+
+--- Request 80 ---
+SSE Connection:        221.584 ms
+MCP Handshake:         198.446 ms
+Resource Read:         228.238 ms
+Total Time:            649.030 ms
+Status:                success
+
+--- Request 81 ---
+SSE Connection:        222.024 ms
+MCP Handshake:         200.301 ms
+Resource Read:         224.914 ms
+Total Time:            648.028 ms
+Status:                success
+
+--- Request 82 ---
+SSE Connection:        222.064 ms
+MCP Handshake:         198.284 ms
+Resource Read:         225.825 ms
+Total Time:            646.650 ms
+Status:                success
+
+--- Request 83 ---
+SSE Connection:        221.190 ms
+MCP Handshake:         199.780 ms
+Resource Read:         228.356 ms
+Total Time:            649.854 ms
+Status:                success
+
+--- Request 84 ---
+SSE Connection:        247.227 ms
+MCP Handshake:         198.836 ms
+Resource Read:         238.086 ms
+Total Time:            684.705 ms
+Status:                success
+
+--- Request 85 ---
+SSE Connection:        222.609 ms
+MCP Handshake:         200.325 ms
+Resource Read:         226.379 ms
+Total Time:            649.746 ms
+Status:                success
+
+--- Request 86 ---
+SSE Connection:        221.965 ms
+MCP Handshake:         197.837 ms
+Resource Read:         225.583 ms
+Total Time:            645.938 ms
+Status:                success
+
+--- Request 87 ---
+SSE Connection:        221.673 ms
+MCP Handshake:         209.198 ms
+Resource Read:         226.326 ms
+Total Time:            657.664 ms
+Status:                success
+
+--- Request 88 ---
+SSE Connection:        221.768 ms
+MCP Handshake:         198.783 ms
+Resource Read:         226.162 ms
+Total Time:            647.393 ms
+Status:                success
+
+--- Request 89 ---
+SSE Connection:        220.945 ms
+MCP Handshake:         199.270 ms
+Resource Read:         224.186 ms
+Total Time:            645.105 ms
+Status:                success
+
+--- Request 90 ---
+SSE Connection:        221.848 ms
+MCP Handshake:         198.615 ms
+Resource Read:         227.100 ms
+Total Time:            648.172 ms
+Status:                success
+
+--- Request 91 ---
+SSE Connection:        221.742 ms
+MCP Handshake:         199.660 ms
+Resource Read:         225.101 ms
+Total Time:            646.943 ms
+Status:                success
+
+--- Request 92 ---
+SSE Connection:        221.276 ms
+MCP Handshake:         198.192 ms
+Resource Read:         246.514 ms
+Total Time:            666.506 ms
+Status:                success
+
+--- Request 93 ---
+SSE Connection:        222.041 ms
+MCP Handshake:         201.030 ms
+Resource Read:         238.661 ms
+Total Time:            662.163 ms
+Status:                success
+
+--- Request 94 ---
+SSE Connection:        221.894 ms
+MCP Handshake:         198.003 ms
+Resource Read:         228.032 ms
+Total Time:            648.530 ms
+Status:                success
+
+--- Request 95 ---
+SSE Connection:        223.985 ms
+MCP Handshake:         200.254 ms
+Resource Read:         224.717 ms
+Total Time:            649.510 ms
+Status:                success
+
+--- Request 96 ---
+SSE Connection:        222.619 ms
+MCP Handshake:         198.493 ms
+Resource Read:         239.816 ms
+Total Time:            661.374 ms
+Status:                success
+
+--- Request 97 ---
+SSE Connection:        221.877 ms
+MCP Handshake:         199.732 ms
+Resource Read:         253.498 ms
+Total Time:            675.770 ms
+Status:                success
+
+--- Request 98 ---
+SSE Connection:        221.838 ms
+MCP Handshake:         198.358 ms
+Resource Read:         225.052 ms
+Total Time:            646.010 ms
+Status:                success
+
+--- Request 99 ---
+SSE Connection:        222.078 ms
+MCP Handshake:         200.171 ms
+Resource Read:         225.655 ms
+Total Time:            648.391 ms
+Status:                success
+
+--- Request 100 ---
+SSE Connection:        221.579 ms
+MCP Handshake:         198.321 ms
+Resource Read:         223.761 ms
+Total Time:            644.122 ms
+Status:                success
+
+
+======================================================================
+Benchmark Complete!
+======================================================================

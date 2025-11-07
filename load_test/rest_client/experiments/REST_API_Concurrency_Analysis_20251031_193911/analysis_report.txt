@@ -1,0 +1,54 @@
+================================================================================
+STATISTICAL ANALYSIS REPORT
+================================================================================
+
+Table 1: Throughput Analysis
+-----------------------------------------------------------------------------------------------
+Concurrency  Throughput (req/s)        Speedup      Efficiency (%)  Success Rate (%)
+Level        Mean ± StdDev                                                         
+-----------------------------------------------------------------------------------------------
+1               8.79 ± 0.00          1.00x      100.00%         100.00%
+10             78.55 ± 0.00          8.94x       89.39%         100.00%
+100           145.22 ± 0.00         16.53x       16.53%         100.00%
+1000          158.54 ± 0.00         18.04x        1.80%         100.00%
+10000         149.06 ± 0.00         16.96x        0.17%         100.00%
+
+
+Table 2: Response Time Analysis (ms)
+--------------------------------------------------------------------------------
+Concurrency  Mean         Median       p95          p99         
+--------------------------------------------------------------------------------
+1            113.74       113.23       118.15       120.87      
+10           121.52       115.95       143.82       225.01      
+100          456.43       466.03       651.38       664.24      
+1000         415.31       420.60       595.49       607.37      
+10000        446.92       462.15       636.33       647.42      
+
+
+Key Findings:
+--------------------------------------------------------------------------------
+1. Maximum Throughput:
+   - Achieved at concurrency level 1000
+   - Throughput: 158.54 req/s
+   - Speedup: 18.04x over baseline
+
+2. Best Efficiency:
+   - At concurrency level 1
+   - Efficiency: 100.00%
+
+3. Scalability Analysis:
+   - Concurrency increased 10000.0x (from 1 to 10000)
+   - Throughput increased 16.96x (8.79 to 149.06 req/s)
+   - System shows sub-linear scaling (possible bottleneck)
+
+4. Latency Trends:
+   - Lowest median latency: 113.23 ms at concurrency 1
+   - Highest median latency: 466.03 ms at concurrency 100
+   - Latency increased 4.12x from lowest to highest concurrency
+
+5. Reliability:
+   - Average success rate: 100.00%
+   - Minimum success rate: 100.00% at concurrency 1
+   - System is highly reliable across all concurrency levels
+
+================================================================================

@@ -1,7 +1,7 @@
 {
   "experiment_name": "REST_API_Concurrency_Analysis",
-  "description": "Comprehensive benchmarking from low to extreme concurrency (1-3000)",
-  "concurrency_levels": [1, 10, 50, 100, 500, 1500, 3000, 5000, 10000],
+  "description": "Comprehensive benchmarking from low to extreme concurrency (1-10000)",
+  "concurrency_levels": [1, 10, 100, 1000, 10000],
   "trials_per_level": 1,
   "requests_per_trial": 100,
   "warmup_requests": 20,

@@ -1,0 +1,84 @@
+Experiment: REST_API_Concurrency_Analysis
+Date: 2025-10-31 19:39:33
+Total Duration: 22.00s (0.37 minutes)
+
+Configuration:
+{
+  "experiment_name": "REST_API_Concurrency_Analysis",
+  "description": "Comprehensive benchmarking from low to extreme concurrency (1-10000)",
+  "concurrency_levels": [
+    1,
+    10,
+    100,
+    1000,
+    10000
+  ],
+  "trials_per_level": 1,
+  "requests_per_trial": 100,
+  "warmup_requests": 20,
+  "cooldown_seconds": 10,
+  "timeout_seconds": 300,
+  "server_url": "http://149.165.175.102:5002",
+  "modelcard_id": "megadetector-mc",
+  "results_dir": "/app/experiments",
+  "percentiles": [
+    50,
+    75,
+    90,
+    95,
+    99,
+    99.9
+  ],
+  "metadata": {
+    "test_scope": "Complete concurrency analysis from optimal to breaking point",
+    "client_description": "Docker container with resource limits (3 CPU, 2GB RAM)",
+    "server_description": "FastAPI with async Neo4j driver (4 CPU, 4GB RAM)",
+    "database": "Neo4j (6 CPU, 12GB RAM)",
+    "network": "Docker bridge network",
+    "date": "2025-10-30",
+    "note": "Single comprehensive test replacing multi-level approach"
+  }
+}
+
+Results Summary:
+======================================================================
+
+Concurrency Level: 1
+  Throughput:        8.79 ± 0.00 req/s
+  Response Time:     113.74 ± 0.00 ms (mean)
+  Response Time:     113.23 ms (median)
+  Response Time p95: 118.15 ms
+  Response Time p99: 120.87 ms
+  Success Rate:      100.00%
+
+Concurrency Level: 10
+  Throughput:        78.55 ± 0.00 req/s
+  Response Time:     121.52 ± 0.00 ms (mean)
+  Response Time:     115.95 ms (median)
+  Response Time p95: 143.82 ms
+  Response Time p99: 225.01 ms
+  Success Rate:      100.00%
+
+Concurrency Level: 100
+  Throughput:        145.22 ± 0.00 req/s
+  Response Time:     456.43 ± 0.00 ms (mean)
+  Response Time:     466.03 ms (median)
+  Response Time p95: 651.38 ms
+  Response Time p99: 664.24 ms
+  Success Rate:      100.00%
+
+Concurrency Level: 1000
+  Throughput:        158.54 ± 0.00 req/s
+  Response Time:     415.31 ± 0.00 ms (mean)
+  Response Time:     420.60 ms (median)
+  Response Time p95: 595.49 ms
+  Response Time p99: 607.37 ms
+  Success Rate:      100.00%
+
+Concurrency Level: 10000
+  Throughput:        149.06 ± 0.00 req/s
+  Response Time:     446.92 ± 0.00 ms (mean)
+  Response Time:     462.15 ms (median)
+  Response Time p95: 636.33 ms
+  Response Time p99: 647.42 ms
+  Success Rate:      100.00%

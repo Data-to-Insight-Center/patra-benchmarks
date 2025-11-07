@@ -54,8 +54,10 @@ class ExperimentRunner:
         async with semaphore:
             start_time = time.perf_counter()
             try:
+                # Force connection close to match curl behavior (no connection reuse)
                 response = await client.get(
-                    f"{self.config['server_url']}/modelcard/{self.config['modelcard_id']}"
+                    f"{self.config['server_url']}/modelcard/{self.config['modelcard_id']}",
+                    headers={"Connection": "close"}
                 )
                 end_time = time.perf_counter()
 
@@ -90,8 +92,9 @@ class ExperimentRunner:
 
         # Configure HTTP client
         timeout = httpx.Timeout(self.config['timeout_seconds'], connect=10.0)
+        # Disable connection keep-alive to match curl behavior (new connection per request)
         limits = httpx.Limits(
-            max_keepalive_connections=concurrency_level,
+            max_keepalive_connections=0,  # Disable keep-alive
             max_connections=concurrency_level * 2
         )
 

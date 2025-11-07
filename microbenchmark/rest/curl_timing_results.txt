@@ -1,0 +1,910 @@
+==================================================================
+Curl Timing Breakdown - 100 Requests
+URL: http://149.165.175.102:5002/modelcard/megadetector-mc-9aaede5b
+Date: Fri Nov  7 16:29:09 UTC 2025
+==================================================================
+
+--- Request 1 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        97.913 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.964 ms
+Time to First Byte:    205.442 ms
+Total Time:            205.488 ms
+HTTP Code:             200
+
+--- Request 2 ---
+DNS Lookup:            0.015 ms
+TCP Connection:        97.635 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.680 ms
+Time to First Byte:    204.831 ms
+Total Time:            204.859 ms
+HTTP Code:             200
+
+--- Request 3 ---
+DNS Lookup:            0.025 ms
+TCP Connection:        97.684 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.724 ms
+Time to First Byte:    206.332 ms
+Total Time:            206.377 ms
+HTTP Code:             200
+
+--- Request 4 ---
+DNS Lookup:            0.014 ms
+TCP Connection:        97.601 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.684 ms
+Time to First Byte:    204.716 ms
+Total Time:            204.748 ms
+HTTP Code:             200
+
+--- Request 5 ---
+DNS Lookup:            0.015 ms
+TCP Connection:        97.959 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  98.015 ms
+Time to First Byte:    205.766 ms
+Total Time:            205.812 ms
+HTTP Code:             200
+
+--- Request 6 ---
+DNS Lookup:            0.014 ms
+TCP Connection:        98.010 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  98.066 ms
+Time to First Byte:    204.984 ms
+Total Time:            205.025 ms
+HTTP Code:             200
+
+--- Request 7 ---
+DNS Lookup:            0.015 ms
+TCP Connection:        97.985 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  98.031 ms
+Time to First Byte:    204.998 ms
+Total Time:            205.050 ms
+HTTP Code:             200
+
+--- Request 8 ---
+DNS Lookup:            0.015 ms
+TCP Connection:        97.682 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.727 ms
+Time to First Byte:    204.504 ms
+Total Time:            204.549 ms
+HTTP Code:             200
+
+--- Request 9 ---
+DNS Lookup:            0.015 ms
+TCP Connection:        98.461 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  98.502 ms
+Time to First Byte:    205.594 ms
+Total Time:            205.650 ms
+HTTP Code:             200
+
+--- Request 10 ---
+DNS Lookup:            0.018 ms
+TCP Connection:        98.060 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  98.118 ms
+Time to First Byte:    206.150 ms
+Total Time:            206.198 ms
+HTTP Code:             200
+
+--- Request 11 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        97.948 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.995 ms
+Time to First Byte:    205.777 ms
+Total Time:            205.823 ms
+HTTP Code:             200
+
+--- Request 12 ---
+DNS Lookup:            0.015 ms
+TCP Connection:        97.572 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.599 ms
+Time to First Byte:    203.947 ms
+Total Time:            204.000 ms
+HTTP Code:             200
+
+--- Request 13 ---
+DNS Lookup:            0.015 ms
+TCP Connection:        97.960 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  98.013 ms
+Time to First Byte:    205.423 ms
+Total Time:            205.456 ms
+HTTP Code:             200
+
+--- Request 14 ---
+DNS Lookup:            0.015 ms
+TCP Connection:        97.608 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.664 ms
+Time to First Byte:    203.751 ms
+Total Time:            203.825 ms
+HTTP Code:             200
+
+--- Request 15 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        97.636 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.691 ms
+Time to First Byte:    204.382 ms
+Total Time:            204.435 ms
+HTTP Code:             200
+
+--- Request 16 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        97.899 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.944 ms
+Time to First Byte:    205.235 ms
+Total Time:            205.264 ms
+HTTP Code:             200
+
+--- Request 17 ---
+DNS Lookup:            0.015 ms
+TCP Connection:        97.884 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.929 ms
+Time to First Byte:    204.750 ms
+Total Time:            204.794 ms
+HTTP Code:             200
+
+--- Request 18 ---
+DNS Lookup:            0.014 ms
+TCP Connection:        97.673 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.726 ms
+Time to First Byte:    205.036 ms
+Total Time:            205.089 ms
+HTTP Code:             200
+
+--- Request 19 ---
+DNS Lookup:            0.015 ms
+TCP Connection:        97.922 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.967 ms
+Time to First Byte:    204.832 ms
+Total Time:            204.876 ms
+HTTP Code:             200
+
+--- Request 20 ---
+DNS Lookup:            0.015 ms
+TCP Connection:        97.552 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.595 ms
+Time to First Byte:    207.773 ms
+Total Time:            207.822 ms
+HTTP Code:             200
+
+--- Request 21 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        98.056 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  98.114 ms
+Time to First Byte:    205.935 ms
+Total Time:            206.022 ms
+HTTP Code:             200
+
+--- Request 22 ---
+DNS Lookup:            0.015 ms
+TCP Connection:        97.819 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.866 ms
+Time to First Byte:    207.295 ms
+Total Time:            207.345 ms
+HTTP Code:             200
+
+--- Request 23 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        97.951 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  98.030 ms
+Time to First Byte:    206.461 ms
+Total Time:            206.507 ms
+HTTP Code:             200
+
+--- Request 24 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        98.006 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  98.062 ms
+Time to First Byte:    207.777 ms
+Total Time:            207.812 ms
+HTTP Code:             200
+
+--- Request 25 ---
+DNS Lookup:            0.015 ms
+TCP Connection:        97.691 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.738 ms
+Time to First Byte:    206.927 ms
+Total Time:            206.972 ms
+HTTP Code:             200
+
+--- Request 26 ---
+DNS Lookup:            0.015 ms
+TCP Connection:        97.624 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.671 ms
+Time to First Byte:    208.005 ms
+Total Time:            208.049 ms
+HTTP Code:             200
+
+--- Request 27 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        97.688 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.745 ms
+Time to First Byte:    206.591 ms
+Total Time:            206.636 ms
+HTTP Code:             200
+
+--- Request 28 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        97.901 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.957 ms
+Time to First Byte:    207.480 ms
+Total Time:            207.533 ms
+HTTP Code:             200
+
+--- Request 29 ---
+DNS Lookup:            0.030 ms
+TCP Connection:        97.597 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.644 ms
+Time to First Byte:    206.823 ms
+Total Time:            206.852 ms
+HTTP Code:             200
+
+--- Request 30 ---
+DNS Lookup:            0.015 ms
+TCP Connection:        97.915 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.970 ms
+Time to First Byte:    211.248 ms
+Total Time:            211.277 ms
+HTTP Code:             200
+
+--- Request 31 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        97.678 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.747 ms
+Time to First Byte:    206.894 ms
+Total Time:            206.924 ms
+HTTP Code:             200
+
+--- Request 32 ---
+DNS Lookup:            0.014 ms
+TCP Connection:        97.910 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.958 ms
+Time to First Byte:    211.946 ms
+Total Time:            211.992 ms
+HTTP Code:             200
+
+--- Request 33 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        97.538 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.593 ms
+Time to First Byte:    206.981 ms
+Total Time:            207.026 ms
+HTTP Code:             200
+
+--- Request 34 ---
+DNS Lookup:            0.015 ms
+TCP Connection:        97.891 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.944 ms
+Time to First Byte:    207.189 ms
+Total Time:            207.232 ms
+HTTP Code:             200
+
+--- Request 35 ---
+DNS Lookup:            0.014 ms
+TCP Connection:        98.059 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  98.112 ms
+Time to First Byte:    207.497 ms
+Total Time:            207.543 ms
+HTTP Code:             200
+
+--- Request 36 ---
+DNS Lookup:            0.031 ms
+TCP Connection:        97.750 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.797 ms
+Time to First Byte:    206.494 ms
+Total Time:            206.544 ms
+HTTP Code:             200
+
+--- Request 37 ---
+DNS Lookup:            0.014 ms
+TCP Connection:        97.989 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  98.035 ms
+Time to First Byte:    210.988 ms
+Total Time:            211.034 ms
+HTTP Code:             200
+
+--- Request 38 ---
+DNS Lookup:            0.030 ms
+TCP Connection:        97.995 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  98.160 ms
+Time to First Byte:    204.803 ms
+Total Time:            204.851 ms
+HTTP Code:             200
+
+--- Request 39 ---
+DNS Lookup:            0.014 ms
+TCP Connection:        97.910 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.968 ms
+Time to First Byte:    205.357 ms
+Total Time:            205.404 ms
+HTTP Code:             200
+
+--- Request 40 ---
+DNS Lookup:            0.015 ms
+TCP Connection:        97.966 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  98.030 ms
+Time to First Byte:    206.624 ms
+Total Time:            206.662 ms
+HTTP Code:             200
+
+--- Request 41 ---
+DNS Lookup:            0.014 ms
+TCP Connection:        97.956 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  98.006 ms
+Time to First Byte:    205.861 ms
+Total Time:            205.964 ms
+HTTP Code:             200
+
+--- Request 42 ---
+DNS Lookup:            0.018 ms
+TCP Connection:        97.643 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.700 ms
+Time to First Byte:    204.527 ms
+Total Time:            204.564 ms
+HTTP Code:             200
+
+--- Request 43 ---
+DNS Lookup:            0.015 ms
+TCP Connection:        97.947 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  98.009 ms
+Time to First Byte:    205.096 ms
+Total Time:            205.140 ms
+HTTP Code:             200
+
+--- Request 44 ---
+DNS Lookup:            0.015 ms
+TCP Connection:        97.554 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.603 ms
+Time to First Byte:    203.917 ms
+Total Time:            203.960 ms
+HTTP Code:             200
+
+--- Request 45 ---
+DNS Lookup:            0.014 ms
+TCP Connection:        97.920 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.970 ms
+Time to First Byte:    205.040 ms
+Total Time:            205.085 ms
+HTTP Code:             200
+
+--- Request 46 ---
+DNS Lookup:            0.015 ms
+TCP Connection:        97.994 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  98.040 ms
+Time to First Byte:    205.824 ms
+Total Time:            205.869 ms
+HTTP Code:             200
+
+--- Request 47 ---
+DNS Lookup:            0.020 ms
+TCP Connection:        97.890 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.951 ms
+Time to First Byte:    205.941 ms
+Total Time:            205.994 ms
+HTTP Code:             200
+
+--- Request 48 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        98.022 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  98.068 ms
+Time to First Byte:    205.207 ms
+Total Time:            205.261 ms
+HTTP Code:             200
+
+--- Request 49 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        97.913 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.994 ms
+Time to First Byte:    205.579 ms
+Total Time:            205.613 ms
+HTTP Code:             200
+
+--- Request 50 ---
+DNS Lookup:            0.017 ms
+TCP Connection:        97.601 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.660 ms
+Time to First Byte:    204.128 ms
+Total Time:            204.181 ms
+HTTP Code:             200
+
+--- Request 51 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        97.680 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.733 ms
+Time to First Byte:    205.039 ms
+Total Time:            205.072 ms
+HTTP Code:             200
+
+--- Request 52 ---
+DNS Lookup:            0.017 ms
+TCP Connection:        97.683 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.746 ms
+Time to First Byte:    204.674 ms
+Total Time:            204.722 ms
+HTTP Code:             200
+
+--- Request 53 ---
+DNS Lookup:            0.018 ms
+TCP Connection:        97.963 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  98.018 ms
+Time to First Byte:    206.109 ms
+Total Time:            206.155 ms
+HTTP Code:             200
+
+--- Request 54 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        97.856 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.905 ms
+Time to First Byte:    205.075 ms
+Total Time:            205.127 ms
+HTTP Code:             200
+
+--- Request 55 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        97.911 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.964 ms
+Time to First Byte:    205.093 ms
+Total Time:            205.140 ms
+HTTP Code:             200
+
+--- Request 56 ---
+DNS Lookup:            0.015 ms
+TCP Connection:        98.191 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  98.245 ms
+Time to First Byte:    206.400 ms
+Total Time:            206.474 ms
+HTTP Code:             200
+
+--- Request 57 ---
+DNS Lookup:            0.017 ms
+TCP Connection:        97.615 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.673 ms
+Time to First Byte:    204.393 ms
+Total Time:            204.440 ms
+HTTP Code:             200
+
+--- Request 58 ---
+DNS Lookup:            0.015 ms
+TCP Connection:        97.813 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.873 ms
+Time to First Byte:    205.223 ms
+Total Time:            205.268 ms
+HTTP Code:             200
+
+--- Request 59 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        97.850 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.908 ms
+Time to First Byte:    204.776 ms
+Total Time:            204.821 ms
+HTTP Code:             200
+
+--- Request 60 ---
+DNS Lookup:            0.018 ms
+TCP Connection:        97.935 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.987 ms
+Time to First Byte:    205.384 ms
+Total Time:            205.539 ms
+HTTP Code:             200
+
+--- Request 61 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        97.958 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  98.005 ms
+Time to First Byte:    204.781 ms
+Total Time:            204.826 ms
+HTTP Code:             200
+
+--- Request 62 ---
+DNS Lookup:            0.015 ms
+TCP Connection:        98.016 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  98.062 ms
+Time to First Byte:    205.820 ms
+Total Time:            205.855 ms
+HTTP Code:             200
+
+--- Request 63 ---
+DNS Lookup:            0.018 ms
+TCP Connection:        97.591 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.639 ms
+Time to First Byte:    205.292 ms
+Total Time:            205.344 ms
+HTTP Code:             200
+
+--- Request 64 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        97.791 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.848 ms
+Time to First Byte:    206.502 ms
+Total Time:            206.546 ms
+HTTP Code:             200
+
+--- Request 65 ---
+DNS Lookup:            0.017 ms
+TCP Connection:        97.588 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.643 ms
+Time to First Byte:    206.853 ms
+Total Time:            206.885 ms
+HTTP Code:             200
+
+--- Request 66 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        97.892 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.949 ms
+Time to First Byte:    205.238 ms
+Total Time:            205.267 ms
+HTTP Code:             200
+
+--- Request 67 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        97.703 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.756 ms
+Time to First Byte:    205.309 ms
+Total Time:            205.391 ms
+HTTP Code:             200
+
+--- Request 68 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        97.726 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.790 ms
+Time to First Byte:    206.766 ms
+Total Time:            206.811 ms
+HTTP Code:             200
+
+--- Request 69 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        97.941 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.988 ms
+Time to First Byte:    208.907 ms
+Total Time:            208.937 ms
+HTTP Code:             200
+
+--- Request 70 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        97.973 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  98.027 ms
+Time to First Byte:    207.723 ms
+Total Time:            207.768 ms
+HTTP Code:             200
+
+--- Request 71 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        97.607 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.680 ms
+Time to First Byte:    206.621 ms
+Total Time:            206.688 ms
+HTTP Code:             200
+
+--- Request 72 ---
+DNS Lookup:            0.017 ms
+TCP Connection:        97.644 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.700 ms
+Time to First Byte:    204.725 ms
+Total Time:            204.984 ms
+HTTP Code:             200
+
+--- Request 73 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        99.249 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  99.299 ms
+Time to First Byte:    207.150 ms
+Total Time:            207.207 ms
+HTTP Code:             200
+
+--- Request 74 ---
+DNS Lookup:            0.019 ms
+TCP Connection:        97.989 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  98.035 ms
+Time to First Byte:    206.355 ms
+Total Time:            206.403 ms
+HTTP Code:             200
+
+--- Request 75 ---
+DNS Lookup:            0.017 ms
+TCP Connection:        97.739 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.784 ms
+Time to First Byte:    206.057 ms
+Total Time:            206.092 ms
+HTTP Code:             200
+
+--- Request 76 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        97.645 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.701 ms
+Time to First Byte:    206.840 ms
+Total Time:            206.888 ms
+HTTP Code:             200
+
+--- Request 77 ---
+DNS Lookup:            0.015 ms
+TCP Connection:        97.542 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.597 ms
+Time to First Byte:    205.067 ms
+Total Time:            205.111 ms
+HTTP Code:             200
+
+--- Request 78 ---
+DNS Lookup:            0.015 ms
+TCP Connection:        97.938 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.984 ms
+Time to First Byte:    204.707 ms
+Total Time:            204.751 ms
+HTTP Code:             200
+
+--- Request 79 ---
+DNS Lookup:            0.015 ms
+TCP Connection:        97.638 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.685 ms
+Time to First Byte:    205.918 ms
+Total Time:            205.965 ms
+HTTP Code:             200
+
+--- Request 80 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        98.020 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  98.076 ms
+Time to First Byte:    208.328 ms
+Total Time:            208.373 ms
+HTTP Code:             200
+
+--- Request 81 ---
+DNS Lookup:            0.019 ms
+TCP Connection:        98.017 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  98.098 ms
+Time to First Byte:    207.891 ms
+Total Time:            207.940 ms
+HTTP Code:             200
+
+--- Request 82 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        97.681 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.738 ms
+Time to First Byte:    213.954 ms
+Total Time:            213.991 ms
+HTTP Code:             200
+
+--- Request 83 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        97.957 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  98.010 ms
+Time to First Byte:    206.693 ms
+Total Time:            206.721 ms
+HTTP Code:             200
+
+--- Request 84 ---
+DNS Lookup:            0.017 ms
+TCP Connection:        97.995 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  98.054 ms
+Time to First Byte:    206.418 ms
+Total Time:            206.454 ms
+HTTP Code:             200
+
+--- Request 85 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        97.660 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.712 ms
+Time to First Byte:    204.553 ms
+Total Time:            204.602 ms
+HTTP Code:             200
+
+--- Request 86 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        97.536 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.589 ms
+Time to First Byte:    204.195 ms
+Total Time:            204.237 ms
+HTTP Code:             200
+
+--- Request 87 ---
+DNS Lookup:            0.017 ms
+TCP Connection:        97.906 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.952 ms
+Time to First Byte:    205.997 ms
+Total Time:            206.028 ms
+HTTP Code:             200
+
+--- Request 88 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        98.038 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  98.093 ms
+Time to First Byte:    204.279 ms
+Total Time:            204.312 ms
+HTTP Code:             200
+
+--- Request 89 ---
+DNS Lookup:            0.015 ms
+TCP Connection:        97.955 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  98.004 ms
+Time to First Byte:    204.708 ms
+Total Time:            204.754 ms
+HTTP Code:             200
+
+--- Request 90 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        97.967 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  98.023 ms
+Time to First Byte:    207.070 ms
+Total Time:            207.115 ms
+HTTP Code:             200
+
+--- Request 91 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        97.952 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.998 ms
+Time to First Byte:    205.100 ms
+Total Time:            205.149 ms
+HTTP Code:             200
+
+--- Request 92 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        97.662 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.716 ms
+Time to First Byte:    204.701 ms
+Total Time:            204.745 ms
+HTTP Code:             200
+
+--- Request 93 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        97.763 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.818 ms
+Time to First Byte:    204.525 ms
+Total Time:            204.580 ms
+HTTP Code:             200
+
+--- Request 94 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        97.687 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.750 ms
+Time to First Byte:    208.016 ms
+Total Time:            208.066 ms
+HTTP Code:             200
+
+--- Request 95 ---
+DNS Lookup:            0.020 ms
+TCP Connection:        98.063 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  98.125 ms
+Time to First Byte:    205.707 ms
+Total Time:            205.756 ms
+HTTP Code:             200
+
+--- Request 96 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        97.886 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.941 ms
+Time to First Byte:    203.941 ms
+Total Time:            203.980 ms
+HTTP Code:             200
+
+--- Request 97 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        97.896 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.951 ms
+Time to First Byte:    206.486 ms
+Total Time:            206.519 ms
+HTTP Code:             200
+
+--- Request 98 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        97.835 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.889 ms
+Time to First Byte:    207.946 ms
+Total Time:            207.992 ms
+HTTP Code:             200
+
+--- Request 99 ---
+DNS Lookup:            0.019 ms
+TCP Connection:        97.929 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.986 ms
+Time to First Byte:    206.587 ms
+Total Time:            206.706 ms
+HTTP Code:             200
+
+--- Request 100 ---
+DNS Lookup:            0.016 ms
+TCP Connection:        97.836 ms
+TLS Handshake:         0.000 ms
+Time to Request Sent:  97.899 ms
+Time to First Byte:    207.080 ms
+Total Time:            207.126 ms
+HTTP Code:             200
+
+
+==================================================================
+Benchmark Complete!
+==================================================================
