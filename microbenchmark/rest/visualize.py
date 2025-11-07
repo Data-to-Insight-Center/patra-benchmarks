@@ -155,7 +155,7 @@ def load_and_analyze_data(csv_file='curl_timing_results.csv', db_file='db.csv'):
 
     return stats
 
-def load_and_analyze_mcp_data(csv_file='../mcp/mcp_timing_results.csv', db_file='../mcp/db.csv', rest_file='../mcp/rest.csv'):
+def load_and_analyze_mcp_data(csv_file='../mcp/mcp_timing_results.csv', db_file='../mcp/layered_mcp_db.csv', rest_file='../mcp/layered_mcp_rest.csv'):
     """Load MCP CSV data and calculate statistics."""
     with open(csv_file, 'r') as f:
         reader = csv.DictReader(f)
