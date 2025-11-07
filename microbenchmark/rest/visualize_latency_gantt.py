@@ -3,7 +3,8 @@
 Side-by-side stacked bar plot comparing REST, Native MCP, and Stacked MCP request latency breakdowns.
 Ignores latency components < 5ms for cleaner publication-ready plots.
 Labels are displayed directly on bars with black text on light backgrounds.
-Same components use consistent colors across all bars (e.g., Database Overhead is same color in all bars).
+Same components use consistent colors and hatch patterns across all bars for easy identification.
+Uses lighter/pastel colors with distinct hatch patterns for better printability.
 """
 
 import csv
@@ -67,21 +68,35 @@ plt.rcParams.update({
     'mathtext.default': 'regular',
 })
 
-# Color scheme - consistent colors for same components across all bars
+# Color scheme - lighter colors with patterns for better distinction
 COLORS = {
     'black': '#000000',      # Primary text/borders
     'white': '#ffffff',      # Background
-    # Component-specific colors (used across REST, Stacked MCP, Native MCP)
-    'dns': '#AEC7E8',            # Light blue - DNS Lookup
-    'tcp': '#FFBB78',            # Light orange - TCP Connection
-    'tls': '#98DF8A',            # Light green - TLS Handshake
-    'connection': '#AEC7E8',     # Light blue - Connection Setup (same as DNS)
-    'handshake': '#FFBB78',      # Light orange - MCP Handshake (same as TCP)
-    'resource': '#98DF8A',       # Light green - Resource Read (same as TLS)
-    'server': '#FF9896',         # Light red - Server Overhead
-    'transfer': '#C5B0D5',       # Light purple - Content Transfer
-    'rest_overhead': '#FF9896',  # Light red - REST Overhead (same as Server)
-    'db': '#C49C94',             # Light brown - Database Overhead (consistent across all)
+    # Component-specific colors - lighter/pastel tones
+    'dns': '#D6EAF8',            # Very light blue - DNS Lookup
+    'tcp': '#FFE6CC',            # Very light orange - TCP Connection
+    'tls': '#D5F4E6',            # Very light green - TLS Handshake
+    'connection': '#D6EAF8',     # Very light blue - Connection Setup (same as DNS)
+    'handshake': '#FFE6CC',      # Very light orange - MCP Handshake (same as TCP)
+    'resource': '#D5F4E6',       # Very light green - Resource Read (same as TLS)
+    'server': '#FADBD8',         # Very light red - Server Overhead
+    'transfer': '#E8DAEF',       # Very light purple - Content Transfer
+    'rest_overhead': '#FADBD8',  # Very light red - REST Overhead (same as Server)
+    'db': '#EDBB99',             # Very light brown - Database Overhead (consistent across all)
+}
+
+# Hatch patterns for each component - simple and distinct
+PATTERNS = {
+    'dns': '/',
+    'tcp': '\\',
+    'tls': 'o',
+    'connection': '/',           # Same as DNS
+    'handshake': '\\',           # Same as TCP
+    'resource': 'o',             # Same as TLS
+    'server': '+',
+    'transfer': 'x',
+    'rest_overhead': '+',        # Same as Server
+    'db': '.',
 }
 
 
@@ -242,72 +257,81 @@ def create_comparison_plot(rest_stats, stacked_mcp_stats, native_mcp_stats, outp
 
     fig, ax = plt.subplots(figsize=(5, 3.5))
 
-    # Define REST components - each component has its own color
+    # Define REST components - each component has its own color and pattern
     # Using 2-line labels for better fit
     rest_components = [
-        ('DNS Lookup', 'DNS\nLookup', COLORS['dns']),
-        ('TCP Connection', 'TCP\nConnection', COLORS['tcp']),
-        ('TLS Handshake', 'TLS\nHandshake', COLORS['tls']),
-        ('Server Overhead', 'Server\nOverhead', COLORS['server']),
-        ('Content Transfer', 'Content\nTransfer', COLORS['transfer']),
+        ('DNS Lookup', 'DNS\nLookup', COLORS['dns'], PATTERNS['dns']),
+        ('TCP Connection', 'TCP\nConnection', COLORS['tcp'], PATTERNS['tcp']),
+        ('TLS Handshake', 'TLS\nHandshake', COLORS['tls'], PATTERNS['tls']),
+        ('Server Overhead', 'Server\nOverhead', COLORS['server'], PATTERNS['server']),
+        ('Content Transfer', 'Content\nTransfer', COLORS['transfer'], PATTERNS['transfer']),
     ]
     if 'Database Overhead' in rest_stats:
-        rest_components.insert(4, ('Database Overhead', 'Database\nOverhead', COLORS['db']))
+        rest_components.insert(4, ('Database Overhead', 'Database\nOverhead', COLORS['db'], PATTERNS['db']))
 
-    # Define Native MCP components - each component has its own color
+    # Define Native MCP components - each component has its own color and pattern
     # Using 2-line labels for better fit
     native_mcp_components = [
-        ('Connection Setup', 'Connection\nSetup', COLORS['connection']),
-        ('MCP Handshake', 'MCP\nHandshake', COLORS['handshake']),
-        ('Resource Read', 'Resource\nRead', COLORS['resource']),
+        ('Connection Setup', 'Connection\nSetup', COLORS['connection'], PATTERNS['connection']),
+        ('MCP Handshake', 'MCP\nHandshake', COLORS['handshake'], PATTERNS['handshake']),
+        ('Resource Read', 'Resource\nRead', COLORS['resource'], PATTERNS['resource']),
     ]
     if 'Database Overhead' in native_mcp_stats:
-        native_mcp_components.append(('Database Overhead', 'Database\nOverhead', COLORS['db']))
+        native_mcp_components.append(('Database Overhead', 'Database\nOverhead', COLORS['db'], PATTERNS['db']))
 
-    # Define Stacked MCP components - each component has its own color
+    # Define Stacked MCP components - each component has its own color and pattern
     # Using 2-line labels for better fit
     stacked_mcp_components = [
-        ('Connection Setup', 'Connection\nSetup', COLORS['connection']),
-        ('MCP Handshake', 'MCP\nHandshake', COLORS['handshake']),
-        ('Resource Read', 'Resource\nRead', COLORS['resource']),
+        ('Connection Setup', 'Connection\nSetup', COLORS['connection'], PATTERNS['connection']),
+        ('MCP Handshake', 'MCP\nHandshake', COLORS['handshake'], PATTERNS['handshake']),
+        ('Resource Read', 'Resource\nRead', COLORS['resource'], PATTERNS['resource']),
     ]
     if 'REST Overhead' in stacked_mcp_stats:
-        stacked_mcp_components.append(('REST Overhead', 'REST\nOverhead', COLORS['rest_overhead']))
+        stacked_mcp_components.append(('REST Overhead', 'REST\nOverhead', COLORS['rest_overhead'], PATTERNS['rest_overhead']))
     if 'Database Overhead' in stacked_mcp_stats:
-        stacked_mcp_components.append(('Database Overhead', 'Database\nOverhead', COLORS['db']))
+        stacked_mcp_components.append(('Database Overhead', 'Database\nOverhead', COLORS['db'], PATTERNS['db']))
 
     # Filter REST components >= 5ms
     rest_significant = []
-    for label, display_label, color in rest_components:
+    for label, display_label, color, pattern in rest_components:
         if label in rest_stats:
             duration = rest_stats[label]['mean']
             if duration >= 5.0:
-                rest_significant.append((display_label, color, duration))
+                rest_significant.append((display_label, color, pattern, duration))
 
     # Filter Native MCP components >= 5ms
     native_mcp_significant = []
-    for label, display_label, color in native_mcp_components:
+    for label, display_label, color, pattern in native_mcp_components:
         if label in native_mcp_stats:
             duration = native_mcp_stats[label]['mean']
             if duration >= 5.0:
-                native_mcp_significant.append((display_label, color, duration))
+                native_mcp_significant.append((display_label, color, pattern, duration))
 
     # Filter Stacked MCP components >= 5ms
     stacked_mcp_significant = []
-    for label, display_label, color in stacked_mcp_components:
+    for label, display_label, color, pattern in stacked_mcp_components:
         if label in stacked_mcp_stats:
             duration = stacked_mcp_stats[label]['mean']
             if duration >= 5.0:
-                stacked_mcp_significant.append((display_label, color, duration))
+                stacked_mcp_significant.append((display_label, color, pattern, duration))
+
+    # Helper function to create next darker shade
+    def next_shade(hex_color, factor=0.93):
+        """Create a slightly darker shade of the color for patterns."""
+        import matplotlib.colors as mcolors
+        rgb = mcolors.hex2color(hex_color)
+        darker = tuple(c * factor for c in rgb)
+        return darker
 
     # Create REST stacked bar
     bar_width = 0.25
     rest_x = 0
     bottom = 0
-    for display_label, color, height in rest_significant:
+    for display_label, color, pattern, height in rest_significant:
+        # Pattern uses slightly darker shade of fill color
         ax.bar(rest_x, height, bottom=bottom, color=color,
-              edgecolor=COLORS['black'], linewidth=1.2, alpha=1.0,
-              width=bar_width)
+              edgecolor=next_shade(color), linewidth=1.0, alpha=1.0,
+              width=bar_width, hatch=pattern)
 
         # Add text label on the bar - single line if < 100ms, two lines otherwise
         label_text = display_label.replace('\n', ' ') if height < 100 else display_label
@@ -320,10 +344,11 @@ def create_comparison_plot(rest_stats, stacked_mcp_stats, native_mcp_stats, outp
     # Create Native MCP bar (next to REST)
     native_mcp_x = 0.35
     bottom = 0
-    for display_label, color, height in native_mcp_significant:
+    for display_label, color, pattern, height in native_mcp_significant:
+        # Pattern uses slightly darker shade of fill color
         ax.bar(native_mcp_x, height, bottom=bottom, color=color,
-              edgecolor=COLORS['black'], linewidth=1.2, alpha=1.0,
-              width=bar_width)
+              edgecolor=next_shade(color), linewidth=1.0, alpha=1.0,
+              width=bar_width, hatch=pattern)
 
         # Add text label on the bar - single line if < 100ms, two lines otherwise
         label_text = display_label.replace('\n', ' ') if height < 100 else display_label
@@ -336,10 +361,11 @@ def create_comparison_plot(rest_stats, stacked_mcp_stats, native_mcp_stats, outp
     # Create Stacked MCP bar
     stacked_mcp_x = 0.7
     bottom = 0
-    for display_label, color, height in stacked_mcp_significant:
+    for display_label, color, pattern, height in stacked_mcp_significant:
+        # Pattern uses slightly darker shade of fill color
         ax.bar(stacked_mcp_x, height, bottom=bottom, color=color,
-              edgecolor=COLORS['black'], linewidth=1.2, alpha=1.0,
-              width=bar_width)
+              edgecolor=next_shade(color), linewidth=1.0, alpha=1.0,
+              width=bar_width, hatch=pattern)
 
         # Add text label on the bar - single line if < 100ms, two lines otherwise
         label_text = display_label.replace('\n', ' ') if height < 100 else display_label
@@ -356,9 +382,9 @@ def create_comparison_plot(rest_stats, stacked_mcp_stats, native_mcp_stats, outp
 
     # Set y-axis limit with some padding
     max_height = max(
-        sum(h for _, _, h in rest_significant),
-        sum(h for _, _, h in native_mcp_significant),
-        sum(h for _, _, h in stacked_mcp_significant)
+        sum(h for _, _, _, h in rest_significant),
+        sum(h for _, _, _, h in native_mcp_significant),
+        sum(h for _, _, _, h in stacked_mcp_significant)
     )
     ax.set_ylim(0, max_height * 1.1)
 
